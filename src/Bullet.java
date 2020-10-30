@@ -4,6 +4,11 @@
  * Created:
  */
 public class Bullet {
+//TODO Dokumentera
+
+    //Konstant värde för hur många bullets som kan sparas i array
+    public static final int BULLETS_MAX = 10;
+
     //Instansvariabler
     int type; // TASK = 1, EVENT = 2, NOTE = 3
     String description;
