@@ -13,6 +13,7 @@ public class Bullet {
     public static final int BULLETS_MAX = 20;
 
     //Instansvariabler
+    //TODO: Lägg till String date;
     int type; // TASK = 1, EVENT = 2, NOTE = 3
     String description;
     int weekday;
@@ -68,5 +69,16 @@ public class Bullet {
         return b;
     }
 
-    //TODO: Tillåt inmatning av formatet TASK Description monday
+    /**
+     * Klassmetod för att skriva alla bullets som inte är tomma
+     *
+     * @param b
+     */
+    public static void printNotNull(Bullet[] b) {
+        //Printing all non empty bullets
+        for (int j = 0; j < b.length; j++) {
+            if ((b[j].type == 0) && (b[j].description == null)) ;
+            else getPrintln(b[j]);
+        }
+    }
 }

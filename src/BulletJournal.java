@@ -1,8 +1,5 @@
 import javax.swing.*;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Scanner;
 
 /**
  * Project: OOP - Assignment 3
@@ -23,38 +20,33 @@ public class BulletJournal {
         int i = 0;
 
         //Manipulera instansvariablernas värden
-        int i = 1;
         bullets[i] = new Bullet();
         bullets[i].type = Bullet.TASK;
-        bullets[i].description = "Tvätta";
+        bullets[i].description = "Something to do";
         bullets[i].weekday = Bullet.MON;
+        i++;
 
+        bullets[i] = Bullet.getInstance(Bullet.EVENT, "Something that is happening", Bullet.TUE);
+        i++;
 
-        //1B. Genom getInstance och kommaseparerade värden
-        i = 1;
-        bullets[i] = Bullet.getInstance(Bullet.TASK, "Mata katterna", Bullet.MON);
-        skrivUt(bullets[i], i);
+        bullets[i] = Bullet.getInstance("3 Something noted 0");
+        i++;
 
-        //1C. Genom getInstance och string
-        i = 3;
-        bullets[i] = Bullet.getInstance("1 kattmat 5");
-        skrivUt(bullets[i], i);
+        Bullet.printNotNull(bullets);
 
-        for (int j = 0; j < bullets.length; j++) {
-            skrivUt(bullets[j], j);
-            if (bullets[j].description == null) j = bullets.length - 1;
-        }
+        /** Läs in från dialogruta. Vet inte om jag vill ha den
+         //TODO: Felhantering inmatningsruta
+         i = 4;
+         String s = "";
+         //s = JOptionPane.showInputDialog("Skriv en Bullet [typnr beskrivning veckodagnr]");
+         if (!s.isEmpty()) {
+         bullets[i] = Bullet.getInstance(s);
+         //TODO: Skriv bättre mottagningsmeddelande
+         JOptionPane.showMessageDialog(null, "Tack! Sparat punkten");
+         testPrint(bullets[i], i);
+         }
+         */
 
-        //TODO: Felhantering inmatningsruta
-        i = 4;
-        String s = "";
-        //s = JOptionPane.showInputDialog("Skriv en Bullet [typnr beskrivning veckodagnr]");
-        if (!s.isEmpty()) {
-            bullets[i] = Bullet.getInstance(s);
-            //TODO: Skriv bättre mottagningsmeddelande
-            JOptionPane.showMessageDialog(null, "Tack! Sparat punkten");
-            skrivUt(bullets[i], i);
-        }
         /*
         i = 5;
         String fileName = "bullets.txt";
@@ -83,13 +75,14 @@ public class BulletJournal {
             */
     }
 
+
     /**
      * Utskrift för enhetstestning
      *
      * @param bullet
      * @param i
      */
-    public static void skrivUt(Bullet bullet, int i) {
+    public static void testPrint(Bullet bullet, int i) {
         System.out.print("i=" + i + ", " + bullet + ":\t");
         Bullet.getPrintln(bullet);
     }
