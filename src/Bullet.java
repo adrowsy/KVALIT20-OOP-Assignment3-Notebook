@@ -23,17 +23,7 @@ public class Bullet {
     public static final String[] WEEKDAYS = {null, "monday", "tuesday", "wed", "thur", "fri", "sat", "sun"};
 
 
-    /**
-     * Klassmetod som skriver värden till en instans av Bullet
-     *
-     * @param b Bullet
-     * @param s Värden
-     */
-    public static void changeBullet(String s, Bullet b) {
-        b.type = Integer.parseInt(s.substring(0, s.indexOf(' ')));
-        b.description = s.substring((s.indexOf(' ') + 1), s.lastIndexOf(' '));
-        b.weekday = Integer.parseInt(s.substring(s.lastIndexOf(' ') + 1));
-    }
+
 
     /**
      * Klassmetod för att skriva ut Bullet
@@ -41,10 +31,10 @@ public class Bullet {
      * @param b Bullet
      * @return message
      */
-    public static String getPrintln(Bullet b) {
+    public static void getPrintln(Bullet b) {
         String message = (TASK_SYMBOL[b.type] + " " + b.description + " @ " + WEEKDAYS[b.weekday]);
         System.out.println(message);
-        return message;
+        //return message;
     }
 
     /**
@@ -53,6 +43,7 @@ public class Bullet {
      * @param type
      * @param description
      * @param weekday
+     * @return b bullet
      */
     public static Bullet getInstance(int type, String description, int weekday) {
         Bullet b = new Bullet();
@@ -66,7 +57,7 @@ public class Bullet {
      * Klassmetod för att skapa Bullet från String
      *
      * @param s Sträng enligt format type description weekday
-     * @return
+     * @return b bullet
      */
     public static Bullet getInstance(String s) {
         Bullet b = new Bullet();
@@ -75,4 +66,6 @@ public class Bullet {
         b.weekday = Integer.parseInt(s.substring(s.lastIndexOf(' ') + 1));
         return b;
     }
+
+    //TODO: Tillåt inmatning av formatet TASK Description monday
 }
