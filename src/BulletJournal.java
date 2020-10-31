@@ -1,8 +1,10 @@
-import javax.swing.*;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 /**
  * Project: OOP - Assignment 3
+ * Inspired by the Bullet Journal method.
+ * Learn more by visiting https://bulletjournal.com/pages/learn
  * Created by: Annika Rengfelt
  * Created:
  */
@@ -11,68 +13,39 @@ public class BulletJournal {
     public static void main(String[] args) throws FileNotFoundException {
 
         //Lagra instanser av bullet i array
-        Bullet[] bullets = new Bullet[Bullet.BULLETS_MAX];
-        for (int i = 0; i < bullets.length; i++) {
-            bullets[i] = new Bullet();
+        Bullet[] firstLog = new Bullet[Bullet.BULLETS_MAX];
+        for (int i = 0; i < firstLog.length; i++) {
+            firstLog[i] = new Bullet();
         }
 
         //Deklarera variabler
-        int i = 0;
+        int i;
+        i = 1;
 
-        //Manipulera instansvariablernas värden
-        bullets[i] = new Bullet();
-        bullets[i].type = Bullet.TASK;
-        bullets[i].description = "Something to do";
-        bullets[i].weekday = Bullet.MON;
-        i++;
+        Bullet.log("bullets.txt", firstLog, i);
+        Bullet.display(firstLog);
 
-        bullets[i] = Bullet.getInstance(Bullet.EVENT, "Something that is happening", Bullet.TUE);
-        i++;
+        clear(firstLog, 1);
+        Bullet.display(firstLog);
 
-        bullets[i] = Bullet.getInstance("3 Something noted 0");
-        i++;
+    }
+//TODO: Flytta till Bullet
 
-        Bullet.printNotNull(bullets);
+    public static void clear(Bullet[] log, int firstBullet, int lastBullet) {
+        for (int j = firstBullet; j <= lastBullet; j++) {
+            log[j].type = 0;
+            log[j].description = null;
+            log[j].weekday = 0;
+        }
+        System.out.println("*** SUCCESSFULLY CLEARED " + (lastBullet - firstBullet) + " BULLETS FROM [" + log + "] *** ");
+    }
 
-        /** Läs in från dialogruta. Vet inte om jag vill ha den
-         //TODO: Felhantering inmatningsruta
-         i = 4;
-         String s = "";
-         //s = JOptionPane.showInputDialog("Skriv en Bullet [typnr beskrivning veckodagnr]");
-         if (!s.isEmpty()) {
-         bullets[i] = Bullet.getInstance(s);
-         //TODO: Skriv bättre mottagningsmeddelande
-         JOptionPane.showMessageDialog(null, "Tack! Sparat punkten");
-         testPrint(bullets[i], i);
-         }
-         */
+    public static void clear(Bullet[] log, int bullet) {
+        log[bullet].type = 0;
+        log[bullet].description = null;
+        log[bullet].weekday = 0;
 
-        /*
-        i = 5;
-        String fileName = "bullets.txt";
-        Scanner file = new Scanner(new File(fileName));
-        int row = 0;
-        try {
-            while (file.hasNextLine()) {
-                Bullet b = new Bullet();
-                b.type = file.nextInt();
-                b.description = file.next();
-                while (!file.hasNextInt()) {
-                    b.description += " " + file.next();
-                }
-                b.weekday = file.nextInt();
-                bullets[i] = b;
-                skrivUt(bullets[i], i);
-                i++;
-                row ++;
-            }
-        } catch (Exception e) {
-            System.out.print("\n### Error on row #"
-                    + row + ". Please revise input or size of memory." +
-                    "\n### Problem reading after: ");
-            Bullet.getPrintln(bullets[i-1]);
-            }
-            */
+        System.out.println("*** SUCCESSFULLY CLEARED BULLET FROM [" + log + "] *** ");
     }
 
 
@@ -84,6 +57,6 @@ public class BulletJournal {
      */
     public static void testPrint(Bullet bullet, int i) {
         System.out.print("i=" + i + ", " + bullet + ":\t");
-        Bullet.getPrintln(bullet);
+        Bullet.display(bullet);
     }
 }

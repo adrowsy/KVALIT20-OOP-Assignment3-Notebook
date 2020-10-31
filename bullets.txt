@@ -3,18 +3,3 @@
 2 Sortera tvätt 4
 3 Var glad!         6
 1 sista raden       1
-1 Tvätta        2
-2 Dammsuga 3
-2 Sortera tvätt 4
-3 Var glad! 6
-1 sista raden 1
-1 Tvätta 2
-2 Dammsuga 3
-2 Sortera tvätt 4
-3 Var glad! 6
-1 sista raden 1
-1 Tvätta 2
-2 Dammsuga 3
-2 Sortera tvätt 4
-3 Var glad! 6
-1 sista raden 1

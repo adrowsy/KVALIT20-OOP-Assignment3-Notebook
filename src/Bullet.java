@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -10,7 +11,7 @@ public class Bullet {
 //TODO Dokumentera
 
     //Konstant värde för hur många bullets som kan sparas i array
-    public static final int BULLETS_MAX = 20;
+    public static final int BULLETS_MAX = 200;
 
     //Instansvariabler
     //TODO: Lägg till String date;
@@ -31,12 +32,9 @@ public class Bullet {
      * Klassmetod för att skriva ut Bullet
      *
      * @param b Bullet
-     * @return message
      */
-    public static void getPrintln(Bullet b) {
-        String message = (TASK_SYMBOL[b.type] + " " + b.description + " @ " + WEEKDAYS[b.weekday]);
-        System.out.println(message);
-        //return message;
+    public static void display(Bullet b) {
+        System.out.println(TASK_SYMBOL[b.type] + " " + b.description + " @ " + WEEKDAYS[b.weekday]);
     }
 
     /**
@@ -47,7 +45,7 @@ public class Bullet {
      * @param weekday
      * @return b bullet
      */
-    public static Bullet getInstance(int type, String description, int weekday) {
+    public static Bullet log(int type, String description, int weekday) {
         Bullet b = new Bullet();
         b.type = type;
         b.description = description;
@@ -61,7 +59,7 @@ public class Bullet {
      * @param s Sträng enligt format type description weekday
      * @return b bullet
      */
-    public static Bullet getInstance(String s) {
+    public static Bullet log(String s) {
         Bullet b = new Bullet();
         b.type = Integer.parseInt(s.substring(0, s.indexOf(' ')));
         b.description = s.substring((s.indexOf(' ') + 1), s.lastIndexOf(' '));
@@ -69,16 +67,45 @@ public class Bullet {
         return b;
     }
 
+    public static void log(String fileName, Bullet[] log, int i) throws FileNotFoundException {
+        Scanner file = new Scanner(new File(fileName));
+        int row = 0;
+        try {
+            while (file.hasNextLine()) {
+                Bullet b = new Bullet();
+                b.type = file.nextInt();
+                b.description = file.next();
+                while (!file.hasNextInt()) {
+                    b.description += " " + file.next();
+                }
+                b.weekday = file.nextInt();
+                log[i] = b;
+                i++;
+                row++;
+                if (i == log.length) {
+                    System.out.print("### WARNING: Not enough memory in " + b + ". Last successful entry @ row #" + row + ": ");
+                    Bullet.display(log[i - 1]);
+                    break;
+                }
+            }
+            System.out.println("*** SUCCESSFULLY ADDED " + row + " BULLETS FROM [" + fileName + "] *** ");
+        } catch (Exception e) {
+            System.out.println("### ERROR: Character out of place on row #" + row + " or immediately after. Please revise [" + fileName + "]");
+        }
+    }
+
     /**
      * Klassmetod för att skriva alla bullets som inte är tomma
      *
-     * @param b
+     * @param log vilken array som skrivs
      */
-    public static void printNotNull(Bullet[] b) {
+    public static void display(Bullet[] log) {
         //Printing all non empty bullets
-        for (int j = 0; j < b.length; j++) {
-            if ((b[j].type == 0) && (b[j].description == null)) ;
-            else getPrintln(b[j]);
+        System.out.println("*** PRINTING LOG: " + log + " ***");
+        for (int j = 0; j < log.length; j++) {
+            if ((log[j].type == 0) && (log[j].description == null)) ;
+            else display(log[j]);
         }
+        System.out.println("*** END OF LOG");
     }
 }
