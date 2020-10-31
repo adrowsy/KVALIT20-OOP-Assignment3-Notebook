@@ -1,3 +1,6 @@
+import java.io.File;
+import java.util.Scanner;
+
 /**
  * Project:
  * Created by: Annika Rengfelt
@@ -7,7 +10,7 @@ public class Bullet {
 //TODO Dokumentera
 
     //Konstant värde för hur många bullets som kan sparas i array
-    public static final int BULLETS_MAX = 10;
+    public static final int BULLETS_MAX = 20;
 
     //Instansvariabler
     int type; // TASK = 1, EVENT = 2, NOTE = 3
@@ -21,8 +24,6 @@ public class Bullet {
             MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
     public static final String[] TASK_SYMBOL = {null, "[*]", "[o]", "[-]"};
     public static final String[] WEEKDAYS = {null, "monday", "tuesday", "wed", "thur", "fri", "sat", "sun"};
-
-
 
 
     /**

@@ -11,56 +11,24 @@ import java.util.Scanner;
  */
 public class BulletJournal {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
 
-        //Skapa en array med plats för bullets
-        Bullet[] bullets = new Bullet[10];
-
-        /*
-        for (Bullet b:bullets)
-            System.out.println(b);
-        null
-        null
-        null
-        null
-        null
-        null
-        null
-        null
-        null
-        null
-        */
-
-        //Skapa bullets
+        //Lagra instanser av bullet i array
+        Bullet[] bullets = new Bullet[Bullet.BULLETS_MAX];
         for (int i = 0; i < bullets.length; i++) {
             bullets[i] = new Bullet();
         }
-/*
-        for (Bullet b:bullets)
-            System.out.println(b);
-Bullet@5f184fc6
-Bullet@3feba861
-Bullet@5b480cf9
-Bullet@6f496d9f
-Bullet@723279cf
-Bullet@10f87f48
-Bullet@b4c966a
-Bullet@2f4d3709
-Bullet@4e50df2e
-Bullet@1d81eb93
- */
 
-        //1. Olika sätt att skapa Bullet med värden
-        //1A. Manuellt
+        //Deklarera variabler
         int i = 0;
+
+        //Manipulera instansvariablernas värden
+        int i = 1;
         bullets[i] = new Bullet();
         bullets[i].type = Bullet.TASK;
         bullets[i].description = "Tvätta";
         bullets[i].weekday = Bullet.MON;
 
-        //Skriv ut
-        skrivUt(bullets[i], i);
-        //
 
         //1B. Genom getInstance och kommaseparerade värden
         i = 1;
@@ -74,35 +42,53 @@ Bullet@1d81eb93
 
         for (int j = 0; j < bullets.length; j++) {
             skrivUt(bullets[j], j);
+            if (bullets[j].description == null) j = bullets.length - 1;
         }
 
-        //1D. Läs in från dialogruta //TODO: Gör om till metod
-        //TODO: Bättre felhantering inmatningsruta
+        //TODO: Felhantering inmatningsruta
         i = 4;
-        String s = JOptionPane.showInputDialog("Skriv en Bullet [typnr beskrivning veckodagnr]");
-        if (!s.isEmpty()) { //Hoppar över om tomt inmatningsfält
+        String s = "";
+        //s = JOptionPane.showInputDialog("Skriv en Bullet [typnr beskrivning veckodagnr]");
+        if (!s.isEmpty()) {
             bullets[i] = Bullet.getInstance(s);
             //TODO: Skriv bättre mottagningsmeddelande
             JOptionPane.showMessageDialog(null, "Tack! Sparat punkten");
             skrivUt(bullets[i], i);
         }
-
-        //1E. Läs in från fil
-        //TODO felhantering surround w try-catch
+        /*
+        i = 5;
         String fileName = "bullets.txt";
-        //Läs in med scanner
-        //Scanner file = new Scanner(new File(fileName));
-
-        //Skapa bullets från textfil          // OBS! Kan inte använda hasNextLine
-
-        //Separera med ;
-
-        //Hitta nästa lediga index
-
-        //Skriv värden till
-
+        Scanner file = new Scanner(new File(fileName));
+        int row = 0;
+        try {
+            while (file.hasNextLine()) {
+                Bullet b = new Bullet();
+                b.type = file.nextInt();
+                b.description = file.next();
+                while (!file.hasNextInt()) {
+                    b.description += " " + file.next();
+                }
+                b.weekday = file.nextInt();
+                bullets[i] = b;
+                skrivUt(bullets[i], i);
+                i++;
+                row ++;
+            }
+        } catch (Exception e) {
+            System.out.print("\n### Error on row #"
+                    + row + ". Please revise input or size of memory." +
+                    "\n### Problem reading after: ");
+            Bullet.getPrintln(bullets[i-1]);
+            }
+            */
     }
 
+    /**
+     * Utskrift för enhetstestning
+     *
+     * @param bullet
+     * @param i
+     */
     public static void skrivUt(Bullet bullet, int i) {
         System.out.print("i=" + i + ", " + bullet + ":\t");
         Bullet.getPrintln(bullet);
