@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -54,7 +53,7 @@ public class Journal {
      * @param fileName
      * @param log        to recieve bullets
      * @param beginIndex where in log to start typing
-     * @throws FileNotFoundException
+     * @throws FileNotFoundException if no file
      */
     public static void log(String fileName, Bullet[] log, int beginIndex) throws FileNotFoundException {
         Scanner file = new Scanner(new File(fileName));
@@ -90,40 +89,41 @@ public class Journal {
      * @param log    to display
      * @param sortBy Sort by default (null), day of week or type of task
      */
+    @SuppressWarnings("StatementWithEmptyBody")
     public static void display(Bullet[] log, String sortBy) {
         String order;
 
         if (sortBy == null) {
             order = "DEFAULT";
             System.out.println("*** PRINTING LOG: " + log + " BY " + order + " ***");
-            for (int j = 0; j < log.length; j++) {
-                if ((log[j].type == 0) && (log[j].description == null)) ;
+            for (Bullet bullet : log) {
+                if ((bullet.type == 0) && (bullet.description == null)) ;
 
                     //Printing all non empty bullets
-                else Bullet.print(log[j]);
+                else Bullet.print(bullet);
             }
         }
 
-        if (sortBy == "day") {
+        if (sortBy.equals("day")) {
             order = "DAY OF WEEK";
             System.out.println("*** PRINTING LOG: " + log + " BY " + order + " ***");
             for (int weekday = 0; weekday <= 7; weekday++) {
-                for (int j = 0; j < log.length; j++) {
-                    if ((log[j].type == 0) && (log[j].description == null)) ;
-                    else if (log[j].weekday == weekday)
-                        Bullet.print(log[j]);
+                for (Bullet bullet : log) {
+                    if ((bullet.type == 0) && (bullet.description == null)) ;
+                    else if (bullet.weekday == weekday)
+                        Bullet.print(bullet);
                     else ;
                 }
             }
         }
-        if (sortBy == "type") {
+        if (sortBy.equals("type")) {
             order = "TYPE";
             System.out.println("*** PRINTING LOG: " + log + " BY " + order + " ***");
             for (int type = 0; type < Bullet.TYPES.length; type++) {
-                for (int j = 0; j < log.length; j++) {
-                    if ((log[j].type == 0) && (log[j].description == null)) ;
-                    else if (log[j].type == type)
-                        Bullet.print(log[j]);
+                for (Bullet bullet : log) {
+                    if ((bullet.type == 0) && (bullet.description == null)) ;
+                    else if (bullet.type == type)
+                        Bullet.print(bullet);
                     else ;
                 }
             }
