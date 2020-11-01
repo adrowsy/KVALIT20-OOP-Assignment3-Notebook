@@ -25,28 +25,15 @@ public class BulletJournal {
         Bullet.log("bullets.txt", firstLog, i);
         Bullet.display(firstLog);
 
-        clear(firstLog, 1);
+        Bullet.clear(firstLog, 1);
+        Bullet.display(firstLog);
+        Bullet.clear(firstLog);
         Bullet.display(firstLog);
 
     }
-//TODO: Flytta till Bullet
 
-    public static void clear(Bullet[] log, int firstBullet, int lastBullet) {
-        for (int j = firstBullet; j <= lastBullet; j++) {
-            log[j].type = 0;
-            log[j].description = null;
-            log[j].weekday = 0;
-        }
-        System.out.println("*** SUCCESSFULLY CLEARED " + (lastBullet - firstBullet) + " BULLETS FROM [" + log + "] *** ");
-    }
 
-    public static void clear(Bullet[] log, int bullet) {
-        log[bullet].type = 0;
-        log[bullet].description = null;
-        log[bullet].weekday = 0;
 
-        System.out.println("*** SUCCESSFULLY CLEARED BULLET FROM [" + log + "] *** ");
-    }
 
 
     /**

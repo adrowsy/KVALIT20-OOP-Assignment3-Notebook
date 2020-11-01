@@ -29,16 +29,21 @@ public class Bullet {
 
 
     /**
-     * Klassmetod för att skriva ut Bullet
+     * Log one bullet from string entry
      *
-     * @param b Bullet
+     * @param s Log (type description weekday)
+     * @return b bullet
      */
-    public static void display(Bullet b) {
-        System.out.println(TASK_SYMBOL[b.type] + " " + b.description + " @ " + WEEKDAYS[b.weekday]);
+    public static Bullet log(String s) {
+        Bullet b = new Bullet();
+        b.type = Integer.parseInt(s.substring(0, s.indexOf(' ')));
+        b.description = s.substring((s.indexOf(' ') + 1), s.lastIndexOf(' '));
+        b.weekday = Integer.parseInt(s.substring(s.lastIndexOf(' ') + 1));
+        return b;
     }
 
     /**
-     * Klassmetod för att skapa Bullet
+     * Log one bullet from comma separated values
      *
      * @param type
      * @param description
@@ -54,19 +59,13 @@ public class Bullet {
     }
 
     /**
-     * Klassmetod för att skapa Bullet från String
+     * Logging from file
      *
-     * @param s Sträng enligt format type description weekday
-     * @return b bullet
+     * @param fileName
+     * @param log      to recieve bullets
+     * @param i        where in log to start typing
+     * @throws FileNotFoundException
      */
-    public static Bullet log(String s) {
-        Bullet b = new Bullet();
-        b.type = Integer.parseInt(s.substring(0, s.indexOf(' ')));
-        b.description = s.substring((s.indexOf(' ') + 1), s.lastIndexOf(' '));
-        b.weekday = Integer.parseInt(s.substring(s.lastIndexOf(' ') + 1));
-        return b;
-    }
-
     public static void log(String fileName, Bullet[] log, int i) throws FileNotFoundException {
         Scanner file = new Scanner(new File(fileName));
         int row = 0;
@@ -95,9 +94,18 @@ public class Bullet {
     }
 
     /**
-     * Klassmetod för att skriva alla bullets som inte är tomma
+     * Display one bullet
      *
-     * @param log vilken array som skrivs
+     * @param b Bullet
+     */
+    public static void display(Bullet b) {
+        System.out.println(TASK_SYMBOL[b.type] + " " + b.description + " @ " + WEEKDAYS[b.weekday]);
+    }
+
+    /**
+     * Display full log. Bullets appear in the order they were written
+     *
+     * @param log to display
      */
     public static void display(Bullet[] log) {
         //Printing all non empty bullets
@@ -107,5 +115,51 @@ public class Bullet {
             else display(log[j]);
         }
         System.out.println("*** END OF LOG");
+    }
+
+    /**
+     * Deleting one bullet entry by resetting values to null
+     *
+     * @param log
+     * @param bullet to b cleared
+     */
+    public static void clear(Bullet[] log, int bullet) {
+        log[bullet].type = 0;
+        log[bullet].description = null;
+        log[bullet].weekday = 0;
+
+        System.out.println("*** SUCCESSFULLY CLEARED BULLET FROM [" + log + "] *** ");
+    }
+
+    /**
+     * Deleting range of bullet entries by resetting values to null
+     *
+     * @param log
+     * @param firstBullet to b cleared
+     * @param lastBullet  to be cleared
+     */
+    public static void clear(Bullet[] log, int firstBullet, int lastBullet) {
+        for (int j = firstBullet; j <= lastBullet; j++) {
+            log[j].type = 0;
+            log[j].description = null;
+            log[j].weekday = 0;
+        }
+        System.out.println("*** SUCCESSFULLY CLEARED " + (lastBullet - firstBullet) + " BULLETS FROM [" + log + "] *** ");
+    }
+
+    /**
+     * Deleting all bullets in one log by resetting values to null
+     *
+     * @param log
+     */
+    public static void clear(Bullet[] log) {
+        //TODO: Warning message and corfirmation if used in interface
+
+        for (int j = 0; j < log.length; j++) {
+            log[j].type = 0;
+            log[j].description = null;
+            log[j].weekday = 0;
+        }
+        System.out.println("*** SUCCESSFULLY CLEARED ALL BULLETS FROM [" + log + "] *** ");
     }
 }
