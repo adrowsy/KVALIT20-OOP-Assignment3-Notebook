@@ -27,74 +27,14 @@ public class Bullet {
     public static final String[] TYPES = {null, "[*]", "[o]", "[-]"};
     public static final String[] WEEKDAYS = {null, "monday", "tuesday", "wed", "thur", "fri", "sat", "sun"};
 
-
     /**
-     * Log one bullet from string entry
+     * Print one bullet
      *
-     * @param s Log (type description weekday)
-     * @return b bullet
+     * @param b Bullet
      */
-    public static Bullet log(String s) {
-        Bullet b = new Bullet();
-        b.type = Integer.parseInt(s.substring(0, s.indexOf(' ')));
-        b.description = s.substring((s.indexOf(' ') + 1), s.lastIndexOf(' '));
-        b.weekday = Integer.parseInt(s.substring(s.lastIndexOf(' ') + 1));
-        return b;
+    public static void print(Bullet b) {
+        System.out.println(Bullet.TYPES[b.type] + " " + b.description + " @ " + Bullet.WEEKDAYS[b.weekday]);
     }
-
-    /**
-     * Log one bullet from comma separated values
-     *
-     * @param type
-     * @param description
-     * @param weekday
-     * @return b bullet
-     */
-    public static Bullet log(int type, String description, int weekday) {
-        Bullet b = new Bullet();
-        b.type = type;
-        b.description = description;
-        b.weekday = weekday;
-        return b;
-    }
-
-    /**
-     * Logging from file
-     *
-     * @param fileName
-     * @param log      to recieve bullets
-     * @param i        where in log to start typing
-     * @throws FileNotFoundException
-     */
-    public static void log(String fileName, Bullet[] log, int i) throws FileNotFoundException {
-        Scanner file = new Scanner(new File(fileName));
-        int row = 0;
-        try {
-            while (file.hasNextLine()) {
-                Bullet b = new Bullet();
-                b.type = file.nextInt();
-                b.description = file.next();
-                while (!file.hasNextInt()) {
-                    b.description += " " + file.next();
-                }
-                b.weekday = file.nextInt();
-                log[i] = b;
-                i++;
-                row++;
-                if (i == log.length) {
-                    System.out.print("### WARNING: Not enough memory in " + b + ". Last successful entry @ row #" + row + ": ");
-                    Display.display(log[i - 1]);
-                    break;
-                }
-            }
-            System.out.println("*** SUCCESSFULLY ADDED " + row + " BULLETS FROM [" + fileName + "] *** ");
-        } catch (Exception e) {
-            System.out.println("### ERROR: Character out of place on row #" + row + " or immediately after. Please revise [" + fileName + "]");
-        }
-    }
-
-
-
 
     /**
      * Deleting one bullet entry by resetting values to null

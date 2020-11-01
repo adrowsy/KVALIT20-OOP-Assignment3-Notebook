@@ -1,5 +1,4 @@
 import java.io.FileNotFoundException;
-import java.util.Random;
 
 /**
  * Project: OOP - Assignment 3
@@ -12,37 +11,14 @@ public class BulletJournal {
 
     public static void main(String[] args) throws FileNotFoundException {
 
-        //Lagra instanser av bullet i array
-        Bullet[] firstLog = new Bullet[Bullet.BULLETS_MAX];
-        for (int i = 0; i < firstLog.length; i++) {
-            firstLog[i] = new Bullet();
-        }
+        Bullet[] firstLog = Journal.createLog();
+        Bullet[] secondLog = Journal.createLog();
 
-        //Deklarera variabler
-        int i;
-        i = 1;
+        Journal.log("bullets.txt", secondLog, 0);
+        Journal.display(secondLog, null);
 
-        Bullet.log("bullets.txt", firstLog, i);
-        Display.sorted(firstLog, null);
         System.out.println("-----------");
-        Display.sorted(firstLog, "day");
-        Display.sorted(firstLog, "type");
-
-
-    }
-
-
-
-
-
-    /**
-     * Utskrift för enhetstestning
-     *
-     * @param bullet
-     * @param i
-     */
-    public static void testPrint(Bullet bullet, int i) {
-        System.out.print("i=" + i + ", " + bullet + ":\t");
-        Display.display(bullet);
+        Journal.display(firstLog, "day");
+        Journal.display(firstLog, "type");
     }
 }
