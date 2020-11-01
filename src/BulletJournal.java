@@ -24,11 +24,8 @@ public class BulletJournal {
 
         Bullet.log("bullets.txt", firstLog, i);
         Bullet.display(firstLog);
-
-        Bullet.clear(firstLog, 1);
-        Bullet.display(firstLog);
-        Bullet.clear(firstLog);
-        Bullet.display(firstLog);
+        System.out.println("-----------");
+        Bullet.display(firstLog, "day");
 
     }
 

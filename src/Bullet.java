@@ -118,6 +118,28 @@ public class Bullet {
     }
 
     /**
+     * Display full log. Bullets appear in the order they were written
+     *
+     * @param log to display
+     */
+    public static void display(Bullet[] log, String sortBy) {
+        //Printing all non empty bullets
+
+        if (sortBy == "day") {
+            System.out.println("*** PRINTING SORTED LOG: " + log + " [SORT BY DAY] ***");
+            for (int weekday = 0; weekday <= 7; weekday++) {
+                for (int j = 0; j < log.length; j++) {
+                    if ((log[j].type == 0) && (log[j].description == null)) ;
+                    else if (log[j].weekday == weekday)
+                        display(log[j]);
+                    else ;
+                }
+            }
+            System.out.println("*** END OF LOG");
+        }
+    }
+
+    /**
      * Deleting one bullet entry by resetting values to null
      *
      * @param log
