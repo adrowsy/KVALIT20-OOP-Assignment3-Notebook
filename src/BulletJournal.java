@@ -23,9 +23,11 @@ public class BulletJournal {
         i = 1;
 
         Bullet.log("bullets.txt", firstLog, i);
-        Bullet.display(firstLog);
+        Display.sorted(firstLog, null);
         System.out.println("-----------");
-        Bullet.display(firstLog, "day");
+        Display.sorted(firstLog, "day");
+        Display.sorted(firstLog, "type");
+
 
     }
 
@@ -41,6 +43,6 @@ public class BulletJournal {
      */
     public static void testPrint(Bullet bullet, int i) {
         System.out.print("i=" + i + ", " + bullet + ":\t");
-        Bullet.display(bullet);
+        Display.display(bullet);
     }
 }

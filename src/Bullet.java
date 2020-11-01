@@ -24,7 +24,7 @@ public class Bullet {
             TASK = 1, EVENT = 2, NOTE = 3;
     public static final int
             MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
-    public static final String[] TASK_SYMBOL = {null, "[*]", "[o]", "[-]"};
+    public static final String[] TYPES = {null, "[*]", "[o]", "[-]"};
     public static final String[] WEEKDAYS = {null, "monday", "tuesday", "wed", "thur", "fri", "sat", "sun"};
 
 
@@ -83,7 +83,7 @@ public class Bullet {
                 row++;
                 if (i == log.length) {
                     System.out.print("### WARNING: Not enough memory in " + b + ". Last successful entry @ row #" + row + ": ");
-                    Bullet.display(log[i - 1]);
+                    Display.display(log[i - 1]);
                     break;
                 }
             }
@@ -93,51 +93,8 @@ public class Bullet {
         }
     }
 
-    /**
-     * Display one bullet
-     *
-     * @param b Bullet
-     */
-    public static void display(Bullet b) {
-        System.out.println(TASK_SYMBOL[b.type] + " " + b.description + " @ " + WEEKDAYS[b.weekday]);
-    }
 
-    /**
-     * Display full log. Bullets appear in the order they were written
-     *
-     * @param log to display
-     */
-    public static void display(Bullet[] log) {
-        //Printing all non empty bullets
-        System.out.println("*** PRINTING LOG: " + log + " ***");
-        for (int j = 0; j < log.length; j++) {
-            if ((log[j].type == 0) && (log[j].description == null)) ;
-            else display(log[j]);
-        }
-        System.out.println("*** END OF LOG");
-    }
 
-    /**
-     * Display full log. Bullets appear in the order they were written
-     *
-     * @param log to display
-     */
-    public static void display(Bullet[] log, String sortBy) {
-        //Printing all non empty bullets
-
-        if (sortBy == "day") {
-            System.out.println("*** PRINTING SORTED LOG: " + log + " [SORT BY DAY] ***");
-            for (int weekday = 0; weekday <= 7; weekday++) {
-                for (int j = 0; j < log.length; j++) {
-                    if ((log[j].type == 0) && (log[j].description == null)) ;
-                    else if (log[j].weekday == weekday)
-                        display(log[j]);
-                    else ;
-                }
-            }
-            System.out.println("*** END OF LOG");
-        }
-    }
 
     /**
      * Deleting one bullet entry by resetting values to null
