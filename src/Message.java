@@ -22,9 +22,9 @@ public class Message {
             "// End of print // ".toUpperCase();
 
     public static final String WARNING =
-            "#### Warning: ".toUpperCase();
+            "### Warning: ".toUpperCase();
 
     public static final String ERROR =
-            "#### Error: ".toUpperCase();
+            "### Error: ".toUpperCase();
 }
 

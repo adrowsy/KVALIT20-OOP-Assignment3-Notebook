@@ -94,4 +94,16 @@ public class Bullet {
         }
         System.out.println(Message.CLEARED + "all bullets from [" + log + "]");
     }
+
+    public static void changeStatus(Bullet[] log, int row, int newStatus) {
+        log[row - 1].type = newStatus;
+    }
+
+    public static void changeDay(Bullet[] log, int row, int newDay) {
+        log[row - 1].weekday = newDay;
+    }
+
+    public static void changeDescription(Bullet[] log, int row, String newDescription) {
+        log[row - 1].description = newDescription;
+    }
 }
