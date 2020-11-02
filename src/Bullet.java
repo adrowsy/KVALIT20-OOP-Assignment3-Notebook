@@ -18,16 +18,15 @@ public class Bullet {
     public static final int SCHEDULED = 9;
     public static final int MIGRATED = 10;
     public static final int DONE = 11;
-    public static final int STRIKE = 12;
-
+    public static final int IGNORE = 12;
     public static final int EVENT = 13;
     public static final int NOTE = 14;
+    public static final int
+            MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
 
     public static final String[] DESCRIPTION =
             {null, "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
                     "[ ]", "[<]", "[>]", "[x]", "[-]", " o ", " - "};
-    public static final int
-            MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
 
     /**
      * Print one bullet

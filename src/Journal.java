@@ -49,6 +49,29 @@ public class Journal {
         return b;
     }
 
+    public static void log(int type, String description, int weekday, Bullet[] log) {
+        boolean emptySpot = false;
+        int firstEmpty = 0;
+        //Look at the log and see if there is an empty space
+        for (int i = 0; i < log.length; i++) {
+            //Save log to first empty space
+            if (log[i].description == null) {
+                emptySpot = true;
+                firstEmpty = i;
+
+                if (emptySpot) {
+                    log[i].type = type;
+                    log[i].description = description;
+                    log[i].weekday = weekday;
+                    System.out.println(Message.ADDED + "one bullet @ index " + i);
+                    break;
+                }
+            }
+        }
+        if (!emptySpot) System.out.println(Message.ERROR + "Log is full.");
+    }
+
+
     /**
      * Logging from file
      *

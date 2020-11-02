@@ -16,5 +16,20 @@ public class BulletJournal {
 
         Bullet[] firstLog = Journal.createLog();
 
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+        Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
+
+
+        Journal.display(firstLog);
+
     }
 }
