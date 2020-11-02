@@ -16,6 +16,7 @@ public class Journal {
         for (int i = 0; i < log.length; i++) {
             log[i] = new Bullet();
         }
+        System.out.println(Message.ADDED + "New log " + log + " with room for " + log.length + " bullets");
         return log;
     }
 

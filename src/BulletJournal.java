@@ -16,6 +16,7 @@ public class BulletJournal {
 
         Bullet[] firstLog = Journal.createLog();
 
+        System.out.println("Skriv i loggen");
         Journal.log("12 Gör saker 2", firstLog);
         Journal.log(Bullet.TASK, "Gör saker", Bullet.SUN, firstLog);
         Journal.migrate("bullets.txt", firstLog);
