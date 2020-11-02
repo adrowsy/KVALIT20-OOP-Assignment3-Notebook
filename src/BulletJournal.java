@@ -14,6 +14,13 @@ public class BulletJournal {
 
     public static void main(String[] args) throws FileNotFoundException {
 
+        //scenario();
+        Message.welcome();
+        Journal.options();
+
+    }
+
+    public static void scenario() throws FileNotFoundException {
         Bullet[] firstLog = Journal.createLog();
 
         System.out.println("Skriv i loggen");
@@ -32,6 +39,14 @@ public class BulletJournal {
 
         System.out.println("Ändra andra radens beskrivning");
         Bullet.changeDescription(firstLog, 2, "Gör roliga saker");
+        Journal.display(firstLog);
+
+        System.out.println("Radera första och andra inlägget");
+        Bullet.clear(firstLog, 0, 1);
+        Journal.display(firstLog);
+
+        System.out.println("Radera alla");
+        Bullet.clear(firstLog, 0, 9);
         Journal.display(firstLog);
     }
 }

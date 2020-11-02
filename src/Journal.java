@@ -1,4 +1,6 @@
+import javax.xml.transform.Source;
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 /**
@@ -179,12 +181,17 @@ public class Journal {
      * @param log to display
      */
     public static void display(Bullet[] log) {
+        int emptyIndex = 0;
         System.out.println(Message.PRINT + log);
         for (int j = 0; j < log.length; j++) {
-            if ((log[j].type != 0) && (log[j].description != null))
+            if ((log[j].type != 0) && (log[j].description != null)) {
                 Bullet.print(log[j]); //Printing all non empty bullets
+            } else emptyIndex++;
+
+            if (emptyIndex >= log.length) System.out.println(Message.EMPTY_LOG);
         }
-        System.out.println(Message.EOL);
+        System.out.println(Message.EOP);
+
     }
 
     public static void display(Bullet[] log, String sorted) {
@@ -223,5 +230,47 @@ public class Journal {
                     Bullet.print(log[j]); //Printing all non empty bullets
             }
         System.out.println(Message.EOP);
+    }
+
+    public static final int NEW = 1,
+            MIG = 3, OPEN = 2;
+
+    public static void options() {
+        System.out.println("Here are your options");
+        System.out.println(NEW + ": Create_new_log".toUpperCase());
+        System.out.println(OPEN + ": Open_existing_log".toUpperCase());
+        System.out.println(MIG + ": Migrate_from_file".toUpperCase());
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter value: ");
+
+        int choice = sc.nextInt();
+        String input;
+        if (choice == NEW) {
+            System.out.flush();
+
+            Journal.createLog();
+            System.out.println("Open log? [Y/N]");
+            input = sc.next();
+            if (input.equals("y")) {
+                System.out.println(Message.OPEN);
+                Journal.journalOptions();
+            }
+        } else if (choice == OPEN) {
+            System.out.println("Please enter name: ");
+            Journal.journalOptions();
+            input = sc.nextLine();
+        } else
+            options();
+    }
+
+    private static void journalOptions() {
+        //TODO: Översätt string > Bullet[] namn
+        //TODO: Överväg att lagra Bullets i textfil för enklare hantering
+        //TODO: Write options for journal after display
+        System.out.println("Journal Options");
+        System.out.println("... Work in progress ...");
+        options();
+
     }
 }

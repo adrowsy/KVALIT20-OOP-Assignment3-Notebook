@@ -55,12 +55,12 @@ public class Bullet {
      * Deleting one bullet entry by resetting values to null
      *
      * @param log
-     * @param bullet to b cleared
+     * @param bulletIndex to b cleared
      */
-    public static void clear(Bullet[] log, int bullet) {
-        log[bullet].type = 0;
-        log[bullet].description = null;
-        log[bullet].weekday = 0;
+    public static void clear(Bullet[] log, int bulletIndex) {
+        log[bulletIndex].type = 0;
+        log[bulletIndex].description = null;
+        log[bulletIndex].weekday = 0;
 
         System.out.println(Message.CLEARED + "1 bullet from [" + log + "]");
     }
@@ -69,16 +69,16 @@ public class Bullet {
      * Deleting range of bullet entries by resetting values to null
      *
      * @param log
-     * @param firstBullet to b cleared
-     * @param lastBullet  to be cleared
+     * @param firstIndex to b cleared
+     * @param lastIndex  to be cleared
      */
-    public static void clear(Bullet[] log, int firstBullet, int lastBullet) {
-        for (int j = firstBullet; j <= lastBullet; j++) {
+    public static void clear(Bullet[] log, int firstIndex, int lastIndex) {
+        for (int j = firstIndex; j <= lastIndex; j++) {
             log[j].type = 0;
             log[j].description = null;
             log[j].weekday = 0;
         }
-        System.out.println(Message.CLEARED + (lastBullet - firstBullet) + " bullets from [" + log + "]");
+        System.out.println(Message.CLEARED + (lastIndex - firstIndex + 1) + " bullets from [" + log + "]");
     }
 
     /**
