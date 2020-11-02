@@ -1,14 +1,14 @@
-1 Tvätta 0
-2 Dammsuga      7
-2 Sortera tvätt 4
-3 Var glad!         6
-1 sista raden       1
-1 Tvätta        5
-2 Dammsuga      3
-2 Sortera tvätt 4
-3 Var glad!         6
-1 sista raden       1
-2 Dammsuga      3
-2 Sortera tvätt 4
-3 Var glad!         6
-1 sista raden       1
+8 Tvätta 0
+13 Dammsuga      7
+13 Sortera tvätt 4
+13 Var glad!         6
+13 sista raden       1
+8 Tvätta        5
+8 Dammsuga      3
+8 Sortera tvätt 4
+8 Var glad!         6
+14 sista raden       1
+8 Dammsuga      3
+8 Sortera tvätt 4
+8 Var glad!         6
+8 sista raden       1

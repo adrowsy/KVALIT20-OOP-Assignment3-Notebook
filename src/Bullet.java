@@ -14,12 +14,18 @@ public class Bullet {
     int weekday;
 
     //Konstanter för type och utskrift
-    public static final String[] TYPES = {null, "[*]", "[o]", "[-]"};
-    public static final int
-            TASK = 1, EVENT = 2, NOTE = 3;
+    public static final int TASK = 8;
+    public static final int SCHEDULED = 9;
+    public static final int MIGRATED = 10;
+    public static final int DONE = 11;
+    public static final int STRIKE = 12;
 
-    public static final String[] WEEKDAYS =
-            {null, "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
+    public static final int EVENT = 13;
+    public static final int NOTE = 14;
+
+    public static final String[] DESCRIPTION =
+            {null, "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+                    "[ ]", "[<]", "[>]", "[x]", "[-]", " o ", " - "};
     public static final int
             MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
 
@@ -29,7 +35,7 @@ public class Bullet {
      * @param b Bullet
      */
     public static void print(Bullet b) {
-        System.out.println(Bullet.TYPES[b.type] + " " + b.description + " @ " + Bullet.WEEKDAYS[b.weekday]);
+        System.out.println(Bullet.DESCRIPTION[b.type] + " " + b.description + " @ " + Bullet.DESCRIPTION[b.weekday]);
     }
 
     /**
@@ -43,7 +49,7 @@ public class Bullet {
         log[bullet].description = null;
         log[bullet].weekday = 0;
 
-        System.out.println("*** SUCCESSFULLY CLEARED BULLET FROM [" + log + "] *** ");
+        System.out.println(Message.CLEARED + "1 bullet from [" + log + "]");
     }
 
     /**
@@ -59,7 +65,7 @@ public class Bullet {
             log[j].description = null;
             log[j].weekday = 0;
         }
-        System.out.println("*** SUCCESSFULLY CLEARED " + (lastBullet - firstBullet) + " BULLETS FROM [" + log + "] *** ");
+        System.out.println(Message.CLEARED + (lastBullet - firstBullet) + " bullets from [" + log + "]");
     }
 
     /**
@@ -68,13 +74,11 @@ public class Bullet {
      * @param log
      */
     public static void clear(Bullet[] log) {
-        //TODO: Warning message and corfirmation if used in interface
-
         for (int j = 0; j < log.length; j++) {
             log[j].type = 0;
             log[j].description = null;
             log[j].weekday = 0;
         }
-        System.out.println("*** SUCCESSFULLY CLEARED ALL BULLETS FROM [" + log + "] *** ");
+        System.out.println(Message.CLEARED + "all bullets from [" + log + "]");
     }
 }

@@ -73,56 +73,67 @@ public class Journal {
                 beginIndex++;
                 row++;
                 if (beginIndex == log.length) {
-                    System.out.print("### WARNING: Not enough memory in " + b + ". Last successful entry @ row #" + row + ": ");
+                    System.out.print(Message.WARNING + "Not enough memory in " + b + ". Last successful entry @ row #" + row + ": ");
                     Bullet.print(log[beginIndex - 1]);
                     break;
                 }
             }
-            System.out.println("*** SUCCESSFULLY ADDED " + row + " BULLETS FROM [" + fileName + "] *** ");
+            System.out.println(Message.ADDED + row + " bullets from [" + fileName + "]");
         } catch (Exception e) {
-            System.out.println("### ERROR: Character out of place on row #" + row + " or immediately after. Please revise [" + fileName + "]");
+            System.out.println(Message.ERROR + "Character out of place on row #" + row + " or immediately after. Please revise [" + fileName + "]");
         }
     }
 
 
     /**
-     * Display full log. Bullets appear in default or chosen order
+     * Display full log. Bullets appear in default order
      *
      * @param log to display
      */
     public static void display(Bullet[] log) {
-        System.out.println("*** PRINTING LOG: " + log + " BY DEFAULT ORDER ***");
+        System.out.println(Message.PRINT + log);
         for (int j = 0; j < log.length; j++) {
-            if ((log[j].type == 0) && (log[j].description == null)) ; //Do nothing
-            else Bullet.print(log[j]); //Printing all non empty bullets
+            if ((log[j].type != 0) && (log[j].description != null))
+                Bullet.print(log[j]); //Printing all non empty bullets
         }
+        System.out.println(Message.EOL);
     }
 
-    public static void displayByDay(Bullet[] log) {
-        System.out.println("*** PRINTING LOG: " + log + " BY DAY ***");
-        for (int weekday = 0; weekday < Bullet.WEEKDAYS.length; weekday++) {
-            for (int j = 0; j < log.length; j++) {
-                if ((log[j].type == 0) && (log[j].description == null)) ; //Do nothing
-                else if (log[j].weekday == weekday)
-                    Bullet.print(log[j]); //Printing all non empty bullets
-                else ;
+    public static void display(Bullet[] log, String sorted) {
+        System.out.println(Message.PRINT + log + " " + sorted);
+
+        if (sorted == BulletJournal.DAYS) {
+            for (int weekday = 0; weekday < Bullet.DESCRIPTION.length; weekday++) {
+                for (int j = 0; j < log.length; j++) {
+                    if ((log[j].type != 0) && (log[j].description != null) && (log[j].weekday == weekday))
+                        Bullet.print(log[j]); //Printing all non empty bullets
+                }
             }
-
-
         }
+        if (sorted == BulletJournal.TYPE) {
+            for (int type = 0; type < Bullet.DESCRIPTION.length; type++) {
+                for (int j = 0; j < log.length; j++) {
+                    if ((log[j].type != 0) && (log[j].description != null) && (log[j].type == type))
+                        Bullet.print(log[j]);
+                }
+            }
+        }
+        System.out.println(Message.EOP);
     }
 
-    public static void displayByType(Bullet[] log) {
+    public static void display(int filter, Bullet[] log) {
+        System.out.println(Message.PRINT + log + " only showing " + Bullet.DESCRIPTION[filter]);
 
-        System.out.println("*** PRINTING LOG: " + log + " BY TYPE ***");
-        for (int type = 0; type < Bullet.TYPES.length; type++) {
+        if (filter == Bullet.TASK) {
             for (int j = 0; j < log.length; j++) {
-                if ((log[j].type == 0) && (log[j].description == null)) ;
-                else if (log[j].type == type)
+                if ((log[j].type != 0) && (log[j].description != null) && (log[j].type == filter))
                     Bullet.print(log[j]);
-                else ;
             }
-        }
-        System.out.println("*** END OF LOG");
+        } else
+            for (int j = 0; j < log.length; j++) {
+                if ((log[j].description != null) && (log[j].weekday == filter))
+                    Bullet.print(log[j]); //Printing all non empty bullets
+            }
+        System.out.println(Message.EOP);
     }
 }

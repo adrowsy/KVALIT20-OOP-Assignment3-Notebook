@@ -9,17 +9,12 @@ import java.io.FileNotFoundException;
  */
 public class BulletJournal {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static final String DAYS = "sorted by day";
+    public static final String TYPE = "sorted by type";
+
+    public static void main(String[] args) {
 
         Bullet[] firstLog = Journal.createLog();
 
-
-        Journal.log("bullets.txt", firstLog, 0);
-        Journal.display(firstLog); //OK
-
-        Journal.displayByDay(firstLog); //NOK
-        System.out.println("-----------");
-
-        Journal.displayByType(firstLog);
     }
 }
