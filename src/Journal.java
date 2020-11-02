@@ -8,9 +8,11 @@ import java.util.Scanner;
  */
 public class Journal {
 
+    public static final int BULLETS_MAX = 10;
+
     public static Bullet[] createLog() {
         //Lagra instanser av bullet i array
-        Bullet[] log = new Bullet[Bullet.BULLETS_MAX];
+        Bullet[] log = new Bullet[Journal.BULLETS_MAX];
         for (int i = 0; i < log.length; i++) {
             log[i] = new Bullet();
         }
@@ -86,46 +88,39 @@ public class Journal {
     /**
      * Display full log. Bullets appear in default or chosen order
      *
-     * @param log    to display
-     * @param sortBy Sort by default (null), day of week or type of task
+     * @param log to display
      */
-    @SuppressWarnings("StatementWithEmptyBody")
-    public static void display(Bullet[] log, String sortBy) {
-        String order;
-
-        if (sortBy == null) {
-            order = "DEFAULT";
-            System.out.println("*** PRINTING LOG: " + log + " BY " + order + " ***");
-            for (Bullet bullet : log) {
-                if ((bullet.type == 0) && (bullet.description == null)) ;
-
-                    //Printing all non empty bullets
-                else Bullet.print(bullet);
-            }
+    public static void display(Bullet[] log) {
+        System.out.println("*** PRINTING LOG: " + log + " BY DEFAULT ORDER ***");
+        for (int j = 0; j < log.length; j++) {
+            if ((log[j].type == 0) && (log[j].description == null)) ; //Do nothing
+            else Bullet.print(log[j]); //Printing all non empty bullets
         }
+    }
 
-        if (sortBy.equals("day")) {
-            order = "DAY OF WEEK";
-            System.out.println("*** PRINTING LOG: " + log + " BY " + order + " ***");
-            for (int weekday = 0; weekday <= 7; weekday++) {
-                for (Bullet bullet : log) {
-                    if ((bullet.type == 0) && (bullet.description == null)) ;
-                    else if (bullet.weekday == weekday)
-                        Bullet.print(bullet);
-                    else ;
-                }
+    public static void displayByDay(Bullet[] log) {
+        System.out.println("*** PRINTING LOG: " + log + " BY DAY ***");
+        for (int weekday = 0; weekday < Bullet.WEEKDAYS.length; weekday++) {
+            for (int j = 0; j < log.length; j++) {
+                if ((log[j].type == 0) && (log[j].description == null)) ; //Do nothing
+                else if (log[j].weekday == weekday)
+                    Bullet.print(log[j]); //Printing all non empty bullets
+                else ;
             }
+
+
         }
-        if (sortBy.equals("type")) {
-            order = "TYPE";
-            System.out.println("*** PRINTING LOG: " + log + " BY " + order + " ***");
-            for (int type = 0; type < Bullet.TYPES.length; type++) {
-                for (Bullet bullet : log) {
-                    if ((bullet.type == 0) && (bullet.description == null)) ;
-                    else if (bullet.type == type)
-                        Bullet.print(bullet);
-                    else ;
-                }
+    }
+
+    public static void displayByType(Bullet[] log) {
+
+        System.out.println("*** PRINTING LOG: " + log + " BY TYPE ***");
+        for (int type = 0; type < Bullet.TYPES.length; type++) {
+            for (int j = 0; j < log.length; j++) {
+                if ((log[j].type == 0) && (log[j].description == null)) ;
+                else if (log[j].type == type)
+                    Bullet.print(log[j]);
+                else ;
             }
         }
         System.out.println("*** END OF LOG");

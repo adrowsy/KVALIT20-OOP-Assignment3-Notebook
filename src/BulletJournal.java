@@ -12,13 +12,14 @@ public class BulletJournal {
     public static void main(String[] args) throws FileNotFoundException {
 
         Bullet[] firstLog = Journal.createLog();
-        Bullet[] secondLog = Journal.createLog();
 
-        Journal.log("bullets.txt", secondLog, 0);
-        Journal.display(secondLog, null);
 
+        Journal.log("bullets.txt", firstLog, 0);
+        Journal.display(firstLog); //OK
+
+        Journal.displayByDay(firstLog); //NOK
         System.out.println("-----------");
-        Journal.display(firstLog, "day");
-        Journal.display(firstLog, "type");
+
+        Journal.displayByType(firstLog);
     }
 }

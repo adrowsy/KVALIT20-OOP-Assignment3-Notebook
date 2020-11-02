@@ -6,8 +6,6 @@
 public class Bullet {
 //TODO Dokumentera
 
-    //Konstant värde för hur många bullets som kan sparas i array
-    public static final int BULLETS_MAX = 200;
 
     //Instansvariabler
     //TODO: Lägg till String date;
@@ -16,12 +14,14 @@ public class Bullet {
     int weekday;
 
     //Konstanter för type och utskrift
+    public static final String[] TYPES = {null, "[*]", "[o]", "[-]"};
     public static final int
             TASK = 1, EVENT = 2, NOTE = 3;
+
+    public static final String[] WEEKDAYS =
+            {null, "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
     public static final int
             MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
-    public static final String[] TYPES = {null, "[*]", "[o]", "[-]"};
-    public static final String[] WEEKDAYS = {null, "monday", "tuesday", "wed", "thur", "fri", "sat", "sun"};
 
     /**
      * Print one bullet
