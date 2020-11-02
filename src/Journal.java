@@ -20,34 +20,13 @@ public class Journal {
     }
 
     /**
-     * Log one bullet from string entry
+     * Log one bullet from input
      *
-     * @param s Log (type description weekday)
-     * @return b bullet
+     * @param type        task, event or note
+     * @param description write something
+     * @param weekday     what day
+     * @param log         where to write
      */
-    public static Bullet log(String s) {
-        Bullet b = new Bullet();
-        b.type = Integer.parseInt(s.substring(0, s.indexOf(' ')));
-        b.description = s.substring((s.indexOf(' ') + 1), s.lastIndexOf(' '));
-        b.weekday = Integer.parseInt(s.substring(s.lastIndexOf(' ') + 1));
-        return b;
-    }
-
-    /**
-     * Log one bullet from comma separated values
-     *
-     * @param type
-     * @param description
-     * @param weekday
-     * @return b bullet
-     */
-    public static Bullet log(int type, String description, int weekday) {
-        Bullet b = new Bullet();
-        b.type = type;
-        b.description = description;
-        b.weekday = weekday;
-        return b;
-    }
 
     public static void log(int type, String description, int weekday, Bullet[] log) {
         boolean emptySpot = false;
@@ -63,7 +42,90 @@ public class Journal {
                     log[i].type = type;
                     log[i].description = description;
                     log[i].weekday = weekday;
-                    System.out.println(Message.ADDED + "one bullet @ index " + i);
+                    System.out.println(Message.ADDED + "1 bullet on row " + (i + 1));
+                    break;
+                }
+            }
+        }
+        if (!emptySpot) System.out.println(Message.ERROR + "Log is full.");
+    }
+
+
+    /**
+     * Log one bullet from input
+     *
+     * @param input string
+     * @param log   where to write
+     */
+
+    public static void log(String input, Bullet[] log) {
+        boolean emptySpot = false;
+        int firstEmpty = 0;
+        //Look at the log and see if there is an empty space
+        for (int i = 0; i < log.length; i++) {
+            //Save log to first empty space
+            if (log[i].description == null) {
+                emptySpot = true;
+                firstEmpty = i;
+
+                if (emptySpot) {
+                    log[i].type = Integer.parseInt(input.substring(0, input.indexOf(' ')));
+                    log[i].description = input.substring((input.indexOf(' ') + 1), input.lastIndexOf(' '));
+                    log[i].weekday = Integer.parseInt(input.substring(input.lastIndexOf(' ') + 1));
+                    System.out.println(Message.ADDED + "1 bullet on row " + (i + 1));
+                    break;
+                }
+            }
+        }
+        if (!emptySpot) System.out.println(Message.ERROR + "Log is full.");
+    }
+
+    /**
+     * Log one bullet from input
+     *
+     * @param fileName
+     * @param log      to recieve bullet
+     * @throws FileNotFoundException if no file
+     */
+
+    public static void migrate(String fileName, Bullet[] log) throws FileNotFoundException {
+        boolean emptySpot = false;
+        int beginIndex = 0;
+        String error = "";
+
+        //Look at the log and see if there is an empty space
+        for (int i = 0; i < log.length; i++) {
+            //Start logging at first empty space
+            if (log[i].description == null) {
+                emptySpot = true;
+                beginIndex = i;
+
+                if (emptySpot) {
+
+                    Scanner file = new Scanner(new File(fileName));
+                    int row = 0;
+                    try {
+                        while (file.hasNextLine()) {
+                            Bullet b = new Bullet();
+                            b.type = file.nextInt();
+                            b.description = file.next();
+                            while (!file.hasNextInt()) {
+                                b.description += " " + file.next();
+                            }
+                            b.weekday = file.nextInt();
+                            log[beginIndex] = b;
+                            beginIndex++;
+                            row++;
+                            if (beginIndex == log.length) {
+                                error = Message.WARNING + "Log is full " + log + ". Could not save past row #" + log.length;
+                                break;
+                            }
+                        }
+                        System.out.println(Message.ADDED + row + " bullets from [" + fileName + "]");
+                        System.out.println(error);
+                    } catch (Exception e) {
+                        System.out.println(Message.ERROR + "Character out of place on row #" + row + " or immediately after. Please revise [" + fileName + "]");
+                    }
                     break;
                 }
             }
@@ -81,6 +143,8 @@ public class Journal {
      * @throws FileNotFoundException if no file
      */
     public static void log(String fileName, Bullet[] log, int beginIndex) throws FileNotFoundException {
+
+
         Scanner file = new Scanner(new File(fileName));
         int row = 0;
         try {

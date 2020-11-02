@@ -29,6 +29,20 @@ public class Bullet {
                     "[ ]", "[<]", "[>]", "[x]", "[-]", " o ", " - "};
 
     /**
+     * Log one bullet from string entry
+     *
+     * @param s Log (type description weekday)
+     * @return b bullet
+     */
+    public static Bullet log(String s) {
+        Bullet b = new Bullet();
+        b.type = Integer.parseInt(s.substring(0, s.indexOf(' ')));
+        b.description = s.substring((s.indexOf(' ') + 1), s.lastIndexOf(' '));
+        b.weekday = Integer.parseInt(s.substring(s.lastIndexOf(' ') + 1));
+        return b;
+    }
+
+    /**
      * Print one bullet
      *
      * @param b Bullet
