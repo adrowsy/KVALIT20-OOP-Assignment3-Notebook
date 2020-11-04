@@ -4,42 +4,49 @@
  * Created:
  */
 public class Bullet {
-//TODO Dokumentera
 
 
     //Instansvariabler
-    //TODO: Lägg till String date;
-    int type; // TASK = 1, EVENT = 2, NOTE = 3
-    String description;
-    int weekday;
+    int type; // TASK, EVENT, NOTE
+    int weekday; //monday, tuesday...
+    String description; //Tvätta 60 grader
 
-    //Konstanter för type och utskrift
-    public static final int TASK = 8;
-    public static final int SCHEDULED = 9;
-    public static final int MIGRATED = 10;
-    public static final int DONE = 11;
-    public static final int IGNORE = 12;
-    public static final int EVENT = 13;
-    public static final int NOTE = 14;
-    public static final int
-            MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
-
-    public static final String[] DESCRIPTION =
-            {null, "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
-                    "[ ]", "[<]", "[>]", "[x]", "[-]", " o ", " - "};
+    //Instansmetoder
 
     /**
-     * Log one bullet from string entry
+     * Write one bullet from string entry
      *
-     * @param s Log (type description weekday)
-     * @return b bullet
+     * @param bullet type description weekday
      */
-    public static Bullet log(String s) {
-        Bullet b = new Bullet();
-        b.type = Integer.parseInt(s.substring(0, s.indexOf(' ')));
-        b.description = s.substring((s.indexOf(' ') + 1), s.lastIndexOf(' '));
-        b.weekday = Integer.parseInt(s.substring(s.lastIndexOf(' ') + 1));
-        return b;
+    public void setBullet(String bullet) { //13 Tvätta 60 grader 7
+        this.type = Integer.parseInt(bullet.substring(0, bullet.indexOf(' ')));
+        this.description = bullet.substring((bullet.indexOf(' ') + 1), bullet.lastIndexOf(' '));
+        this.weekday = Integer.parseInt(bullet.substring(bullet.lastIndexOf(' ') + 1));
+        System.out.println(Message.ADDED + "1 bullet");
+    }
+
+    /**
+     * Write one bullet from string entry
+     *
+     * @param type
+     * @param description
+     * @param weekday
+     */
+    public void setBullet(int type, String description, int weekday) { //Bullet.TASK,"Tvätta 60 grader",7
+        this.type = type;
+        this.description = description;
+        this.weekday = weekday;
+        System.out.println(Message.ADDED + "1 bullet");
+    }
+
+    /**
+     * Deleting one bullet entry by resetting values to null
+     */
+    public void clearBullet() {
+        this.type = 0;
+        this.description = null;
+        this.weekday = 0;
+        System.out.println(Message.CLEARED + "1 bullet");
     }
 
     /**
@@ -51,59 +58,25 @@ public class Bullet {
         System.out.println(Bullet.DESCRIPTION[b.type] + " " + b.description + " @ " + Bullet.DESCRIPTION[b.weekday]);
     }
 
-    /**
-     * Deleting one bullet entry by resetting values to null
-     *
-     * @param log
-     * @param bulletIndex to b cleared
-     */
-    public static void clear(Bullet[] log, int bulletIndex) {
-        log[bulletIndex].type = 0;
-        log[bulletIndex].description = null;
-        log[bulletIndex].weekday = 0;
+    //Konstanter för type och utskrift
 
-        System.out.println(Message.CLEARED + "1 bullet from [" + log + "]");
-    }
+    public static final int
 
-    /**
-     * Deleting range of bullet entries by resetting values to null
-     *
-     * @param log
-     * @param firstIndex to b cleared
-     * @param lastIndex  to be cleared
-     */
-    public static void clear(Bullet[] log, int firstIndex, int lastIndex) {
-        for (int j = firstIndex; j <= lastIndex; j++) {
-            log[j].type = 0;
-            log[j].description = null;
-            log[j].weekday = 0;
-        }
-        System.out.println(Message.CLEARED + (lastIndex - firstIndex + 1) + " bullets from [" + log + "]");
-    }
+            MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
+    public static final int TASK = 8, SCHEDULED = 9, MIGRATED = 10, DONE = 11, IGNORE = 12;
 
-    /**
-     * Deleting all bullets in one log by resetting values to null
-     *
-     * @param log
-     */
-    public static void clear(Bullet[] log) {
-        for (int j = 0; j < log.length; j++) {
-            log[j].type = 0;
-            log[j].description = null;
-            log[j].weekday = 0;
-        }
-        System.out.println(Message.CLEARED + "all bullets from [" + log + "]");
-    }
+    public static final int EVENT = 13;
 
-    public static void changeStatus(Bullet[] log, int row, int newStatus) {
-        log[row - 1].type = newStatus;
-    }
+    public static final int NOTE = 14;
 
-    public static void changeDay(Bullet[] log, int row, int newDay) {
-        log[row - 1].weekday = newDay;
-    }
+    public static final String[] DESCRIPTION =
+            {null, "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday",
+                    "[ ]", "[<]", "[>]", "[x]", "[-]", " o ", " - "};
 
-    public static void changeDescription(Bullet[] log, int row, String newDescription) {
-        log[row - 1].description = newDescription;
+    @Override
+    public String toString() {
+        return type + " " + description + " " + weekday;
     }
 }
+
+

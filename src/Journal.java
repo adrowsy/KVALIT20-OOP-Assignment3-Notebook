@@ -1,6 +1,4 @@
-import javax.xml.transform.Source;
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 /**
@@ -10,25 +8,42 @@ import java.util.Scanner;
  */
 public class Journal {
 
-    public static final int BULLETS_MAX = 10;
+    /**
+     * journal är en instansvariabel som lagrar ett godtyckligt antal bullets
+     */
+    public Bullet[] bullets;
 
-    public static Bullet[] createLog() {
-        //Lagra instanser av bullet i array
-        Bullet[] log = new Bullet[Journal.BULLETS_MAX];
-        for (int i = 0; i < log.length; i++) {
-            log[i] = new Bullet();
-        }
-        System.out.println(Message.ADDED + "New log " + log + " with room for " + log.length + " bullets");
-        return log;
+    /**
+     * Klassmetod som skapar en "tom" journal
+     * (journalen innehåller en array av bullets där alla komponenter är null
+     *
+     * @param count antal bullets
+     * @return en journal (en instans av klassen Journal)
+     */
+    public static Journal createJournal(int count) {
+        Journal journal = new Journal();
+        journal.bullets = new Bullet[count];
+        System.out.println(Message.ADDED + "New log " + journal + " with room for " + journal.length + " bullets");
+        return journal;
     }
+
+    /**
+     * En klassmetod som skriver ut alla bullets i en log
+     *
+     * @param journal
+     */
+    public static void print(Journal journal) {
+        for (Bullet bullet : journal.bullets)
+            Bullet.print(bullet);
+    }
+
 
     /**
      * Log one bullet from input
      *
-     * @param type        task, event or note
-     * @param description write something
-     * @param weekday     what day
-     * @param log         where to write
+     * @param type    task, event or note
+     * @param weekday what day
+     * @param log     where to write
      */
 
     public static void log(int type, String description, int weekday, Bullet[] log) {
@@ -197,7 +212,7 @@ public class Journal {
     public static void display(Bullet[] log, String sorted) {
         System.out.println(Message.PRINT + log + " " + sorted);
 
-        if (sorted == BulletJournal.DAYS) {
+        if (sorted == JournalDemo.DAYS) {
             for (int weekday = 0; weekday < Bullet.DESCRIPTION.length; weekday++) {
                 for (int j = 0; j < log.length; j++) {
                     if ((log[j].type != 0) && (log[j].description != null) && (log[j].weekday == weekday))
@@ -205,7 +220,7 @@ public class Journal {
                 }
             }
         }
-        if (sorted == BulletJournal.TYPE) {
+        if (sorted == JournalDemo.TYPE) {
             for (int type = 0; type < Bullet.DESCRIPTION.length; type++) {
                 for (int j = 0; j < log.length; j++) {
                     if ((log[j].type != 0) && (log[j].description != null) && (log[j].type == type))
@@ -249,7 +264,7 @@ public class Journal {
         if (choice == NEW) {
             System.out.flush();
 
-            Journal.createLog();
+            Journal.createJournal(1);
             System.out.println("Open log? [Y/N]");
             input = sc.next();
             if (input.equals("y")) {
