@@ -12,15 +12,15 @@ public class JournalDemo {
     public static final String DAYS = "sorted by day";
     public static final String TYPE = "sorted by type";
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
 
         //scenario();
-        Message.welcome();
+        Message.welcome(); // *** Welcome to Digby - A digital notebook inspired by the Bullet Journal method ***
         Journal.options();
 
-    }
+        //Journal j1 = Journal.createJournal("title"); //* SUCCECSSFULLY ADDED: New journal title
+        //System.out.println(j1); //title
 
-    public static void scenario() throws FileNotFoundException {
 
     }
 }

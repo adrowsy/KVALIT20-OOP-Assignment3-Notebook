@@ -11,30 +11,43 @@ public class Journal {
     /**
      * journal är en instansvariabel som lagrar ett godtyckligt antal bullets
      */
-    public Bullet[] bullets;
+    Bullet[] log; //Varje instans av journal har en logg som är en bulletarray
+    String name; //Varje instans av journal har också en titel
+
+    /**
+     * Instansmetod som döper journalen
+     *
+     * @param name döp loggen
+     */
+    public void setTitle(String name) {
+        this.name = name;
+    }
 
     /**
      * Klassmetod som skapar en "tom" journal
      * (journalen innehåller en array av bullets där alla komponenter är null
      *
-     * @param count antal bullets
      * @return en journal (en instans av klassen Journal)
      */
-    public static Journal createJournal(int count) {
+    public static Journal createJournal(String name) {
         Journal journal = new Journal();
-        journal.bullets = new Bullet[count];
-        System.out.println(Message.ADDED + "New log " + journal + " with room for " + journal.length + " bullets");
+        journal.name = name;
+        System.out.println(Message.ADDED + "New journal " + journal);
         return journal;
     }
 
     /**
      * En klassmetod som skriver ut alla bullets i en log
      *
-     * @param journal
+     * @param j
      */
-    public static void print(Journal journal) {
-        for (Bullet bullet : journal.bullets)
-            Bullet.print(bullet);
+    public static void print(Journal j) {
+        try {
+            for (Bullet bullet : j.log)
+                Bullet.print(bullet);
+        } catch (Exception e) {
+            System.out.println(Message.EMPTY_LOG);
+        }
     }
 
 
@@ -98,58 +111,7 @@ public class Journal {
         if (!emptySpot) System.out.println(Message.ERROR + "Log is full.");
     }
 
-    /**
-     * Log one bullet from input
-     *
-     * @param fileName
-     * @param log      to recieve bullet
-     * @throws FileNotFoundException if no file
-     */
 
-    public static void migrate(String fileName, Bullet[] log) throws FileNotFoundException {
-        boolean emptySpot = false;
-        int beginIndex = 0;
-        String error = "";
-
-        //Look at the log and see if there is an empty space
-        for (int i = 0; i < log.length; i++) {
-            //Start logging at first empty space
-            if (log[i].description == null) {
-                emptySpot = true;
-                beginIndex = i;
-
-                if (emptySpot) {
-
-                    Scanner file = new Scanner(new File(fileName));
-                    int row = 0;
-                    try {
-                        while (file.hasNextLine()) {
-                            Bullet b = new Bullet();
-                            b.type = file.nextInt();
-                            b.description = file.next();
-                            while (!file.hasNextInt()) {
-                                b.description += " " + file.next();
-                            }
-                            b.weekday = file.nextInt();
-                            log[beginIndex] = b;
-                            beginIndex++;
-                            row++;
-                            if (beginIndex == log.length) {
-                                error = Message.WARNING + "Log is full " + log + ". Could not save past row #" + log.length;
-                                break;
-                            }
-                        }
-                        System.out.println(Message.ADDED + row + " bullets from [" + fileName + "]");
-                        System.out.println(error);
-                    } catch (Exception e) {
-                        System.out.println(Message.ERROR + "Character out of place on row #" + row + " or immediately after. Please revise [" + fileName + "]");
-                    }
-                    break;
-                }
-            }
-        }
-        if (!emptySpot) System.out.println(Message.ERROR + "Log is full.");
-    }
 
 
     /**
@@ -257,24 +219,30 @@ public class Journal {
         System.out.println(MIG + ": Migrate_from_file".toUpperCase());
 
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter value: ");
+        System.out.print("Please enter value: ");
 
         int choice = sc.nextInt();
         String input;
         if (choice == NEW) {
-            System.out.flush();
+            System.out.print("Name log: ");
+            input = sc.next(); //TODO: Tillåt blanksteg i namnet
 
-            Journal.createJournal(1);
-            System.out.println("Open log? [Y/N]");
+            //Skapa log
+            Journal j1 = Journal.createJournal(input);
+
+            //Lägg till bullets
+            System.out.println("Type your bullets. Save with End of file-command");
+
+
+            System.out.print("Open log? [Y/N] \t");
             input = sc.next();
             if (input.equals("y")) {
                 System.out.println(Message.OPEN);
-                Journal.journalOptions();
+                Journal.print(j1);
+
             }
         } else if (choice == OPEN) {
-            System.out.println("Please enter name: ");
-            Journal.journalOptions();
-            input = sc.nextLine();
+
         } else
             options();
     }
@@ -287,5 +255,10 @@ public class Journal {
         System.out.println("... Work in progress ...");
         options();
 
+    }
+
+    @Override
+    public String toString() {
+        return name + "";
     }
 }
