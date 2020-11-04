@@ -1,5 +1,3 @@
-import java.io.FileNotFoundException;
-
 /**
  * Project: OOP - Assignment 3
  * Inspired by the Bullet Journal method.
@@ -16,10 +14,13 @@ public class JournalDemo {
 
         //scenario();
         Message.welcome(); // *** Welcome to Digby - A digital notebook inspired by the Bullet Journal method ***
-        Journal.options();
+        //Journal.options();
 
-        //Journal j1 = Journal.createJournal("title"); //* SUCCECSSFULLY ADDED: New journal title
+        Journal j1 = Journal.getInstance("title"); //* SUCCECSSFULLY ADDED: New journal title
         //System.out.println(j1); //title
+
+        Journal.print(j1, DAYS);
+        Journal.print(j1, TYPE);
 
 
     }

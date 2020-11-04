@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -15,6 +14,19 @@ public class Journal {
     String name; //Varje instans av journal har också en titel
 
     /**
+     * Klassmetod som skapar en "tom" journal
+     * (journalen innehåller en array av bullets där alla komponenter är null
+     *
+     * @return en journal (en instans av klassen Journal)
+     */
+    public static Journal getInstance(String name) {
+        Journal journal = new Journal();
+        journal.name = name;
+        System.out.println(Message.ADDED + "New journal " + journal);
+        return journal;
+    }
+
+    /**
      * Instansmetod som döper journalen
      *
      * @param name döp loggen
@@ -24,190 +36,49 @@ public class Journal {
     }
 
     /**
-     * Klassmetod som skapar en "tom" journal
-     * (journalen innehåller en array av bullets där alla komponenter är null
-     *
-     * @return en journal (en instans av klassen Journal)
-     */
-    public static Journal createJournal(String name) {
-        Journal journal = new Journal();
-        journal.name = name;
-        System.out.println(Message.ADDED + "New journal " + journal);
-        return journal;
-    }
-
-    /**
      * En klassmetod som skriver ut alla bullets i en log
      *
      * @param j
      */
     public static void print(Journal j) {
         try {
-            for (Bullet bullet : j.log)
-                Bullet.print(bullet);
+            for (Bullet b : j.log)
+                Bullet.print(b);
         } catch (Exception e) {
             System.out.println(Message.EMPTY_LOG);
         }
     }
 
-
-    /**
-     * Log one bullet from input
-     *
-     * @param type    task, event or note
-     * @param weekday what day
-     * @param log     where to write
-     */
-
-    public static void log(int type, String description, int weekday, Bullet[] log) {
-        boolean emptySpot = false;
-        int firstEmpty = 0;
-        //Look at the log and see if there is an empty space
-        for (int i = 0; i < log.length; i++) {
-            //Save log to first empty space
-            if (log[i].description == null) {
-                emptySpot = true;
-                firstEmpty = i;
-
-                if (emptySpot) {
-                    log[i].type = type;
-                    log[i].description = description;
-                    log[i].weekday = weekday;
-                    System.out.println(Message.ADDED + "1 bullet on row " + (i + 1));
-                    break;
-                }
-            }
-        }
-        if (!emptySpot) System.out.println(Message.ERROR + "Log is full.");
-    }
-
-
-    /**
-     * Log one bullet from input
-     *
-     * @param input string
-     * @param log   where to write
-     */
-
-    public static void log(String input, Bullet[] log) {
-        boolean emptySpot = false;
-        int firstEmpty = 0;
-        //Look at the log and see if there is an empty space
-        for (int i = 0; i < log.length; i++) {
-            //Save log to first empty space
-            if (log[i].description == null) {
-                emptySpot = true;
-                firstEmpty = i;
-
-                if (emptySpot) {
-                    log[i].type = Integer.parseInt(input.substring(0, input.indexOf(' ')));
-                    log[i].description = input.substring((input.indexOf(' ') + 1), input.lastIndexOf(' '));
-                    log[i].weekday = Integer.parseInt(input.substring(input.lastIndexOf(' ') + 1));
-                    System.out.println(Message.ADDED + "1 bullet on row " + (i + 1));
-                    break;
-                }
-            }
-        }
-        if (!emptySpot) System.out.println(Message.ERROR + "Log is full.");
-    }
-
-
-
-
-    /**
-     * Logging from file
-     *
-     * @param fileName
-     * @param log        to recieve bullets
-     * @param beginIndex where in log to start typing
-     * @throws FileNotFoundException if no file
-     */
-    public static void log(String fileName, Bullet[] log, int beginIndex) throws FileNotFoundException {
-
-
-        Scanner file = new Scanner(new File(fileName));
-        int row = 0;
-        try {
-            while (file.hasNextLine()) {
-                Bullet b = new Bullet();
-                b.type = file.nextInt();
-                b.description = file.next();
-                while (!file.hasNextInt()) {
-                    b.description += " " + file.next();
-                }
-                b.weekday = file.nextInt();
-                log[beginIndex] = b;
-                beginIndex++;
-                row++;
-                if (beginIndex == log.length) {
-                    System.out.print(Message.WARNING + "Not enough memory in " + b + ". Last successful entry @ row #" + row + ": ");
-                    Bullet.print(log[beginIndex - 1]);
-                    break;
-                }
-            }
-            System.out.println(Message.ADDED + row + " bullets from [" + fileName + "]");
-        } catch (Exception e) {
-            System.out.println(Message.ERROR + "Character out of place on row #" + row + " or immediately after. Please revise [" + fileName + "]");
-        }
-    }
-
-
-    /**
-     * Display full log. Bullets appear in default order
-     *
-     * @param log to display
-     */
-    public static void display(Bullet[] log) {
-        int emptyIndex = 0;
-        System.out.println(Message.PRINT + log);
-        for (int j = 0; j < log.length; j++) {
-            if ((log[j].type != 0) && (log[j].description != null)) {
-                Bullet.print(log[j]); //Printing all non empty bullets
-            } else emptyIndex++;
-
-            if (emptyIndex >= log.length) System.out.println(Message.EMPTY_LOG);
-        }
-        System.out.println(Message.EOP);
-
-    }
-
-    public static void display(Bullet[] log, String sorted) {
-        System.out.println(Message.PRINT + log + " " + sorted);
+    public static void print(Journal j, String sorted) {
+        System.out.println(Message.PRINT + j + " " + sorted);
 
         if (sorted == JournalDemo.DAYS) {
-            for (int weekday = 0; weekday < Bullet.DESCRIPTION.length; weekday++) {
-                for (int j = 0; j < log.length; j++) {
-                    if ((log[j].type != 0) && (log[j].description != null) && (log[j].weekday == weekday))
-                        Bullet.print(log[j]); //Printing all non empty bullets
+            for (int weekday = 1; weekday < Bullet.WEEKDAYS.length; weekday++) {
+                try {
+                    for (Bullet b : j.log) {
+                        if (b.weekday == weekday)
+                            Bullet.print(b);
+                    }
+                } catch (Exception e) {
+                    //System.out.println("No posts for " + Bullet.WEEKDAYS[weekday]);
                 }
             }
+            System.out.println(Message.EOP);
         }
         if (sorted == JournalDemo.TYPE) {
-            for (int type = 0; type < Bullet.DESCRIPTION.length; type++) {
-                for (int j = 0; j < log.length; j++) {
-                    if ((log[j].type != 0) && (log[j].description != null) && (log[j].type == type))
-                        Bullet.print(log[j]);
+            for (int type = 1; type <= Bullet.TYPES.length; type++) {
+                try {
+                    for (Bullet b : j.log) {
+                        if (b.type == type)
+                            Bullet.print(b);
+                    }
+                } catch (Exception e) {
                 }
             }
+            System.out.println(Message.EOP);
         }
-        System.out.println(Message.EOP);
     }
 
-    public static void display(int filter, Bullet[] log) {
-        System.out.println(Message.PRINT + log + " only showing " + Bullet.DESCRIPTION[filter]);
-
-        if (filter == Bullet.TASK) {
-            for (int j = 0; j < log.length; j++) {
-                if ((log[j].type != 0) && (log[j].description != null) && (log[j].type == filter))
-                    Bullet.print(log[j]);
-            }
-        } else
-            for (int j = 0; j < log.length; j++) {
-                if ((log[j].description != null) && (log[j].weekday == filter))
-                    Bullet.print(log[j]); //Printing all non empty bullets
-            }
-        System.out.println(Message.EOP);
-    }
 
     public static final int NEW = 1,
             MIG = 3, OPEN = 2;
@@ -228,7 +99,7 @@ public class Journal {
             input = sc.next(); //TODO: Tillåt blanksteg i namnet
 
             //Skapa log
-            Journal j1 = Journal.createJournal(input);
+            Journal j1 = Journal.getInstance(input);
 
             //Lägg till bullets
             System.out.println("Type your bullets. Save with End of file-command");
