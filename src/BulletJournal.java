@@ -5,8 +5,9 @@ import java.util.Scanner;
  * Inspired by the Bullet Journal method.
  * Learn more by visiting https://bulletjournal.com/pages/learn
  * Created by: Annika Rengfelt
- * Created:
+ * Submitted: 2020-11-11
  */
+
 public class BulletJournal {
 
     public static final String DAYS = "by days";

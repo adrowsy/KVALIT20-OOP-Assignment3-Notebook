@@ -1,10 +1,11 @@
-import java.util.Scanner;
-
 /**
- * Project:
+ * Project: OOP - Assignment 3
+ * Inspired by the Bullet Journal method.
+ * Learn more by visiting https://bulletjournal.com/pages/learn
  * Created by: Annika Rengfelt
- * Created:
+ * Submitted: 2020-11-11
  */
+
 public class Journal {
 
     //Egenskaper hos Journal
