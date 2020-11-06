@@ -1,8 +1,3 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.OptionalDataException;
-import java.util.Scanner;
-
 /**
  * Project:
  * Created by: Annika Rengfelt
@@ -29,6 +24,7 @@ public class Bullet {
             MON = 1, TUE = 2, WED = 3, THUR = 4, FRI = 5, SAT = 6, SUN = 7;
     public static final int TASK = 1, DONE = 2, MIGRATED = 3;
 
+    //TODO: Unicode och korrekta BuJO-symboler
     public static final String[] SYMBOLS = {null, "[*]", "[x]", "[>]"};
 
     public static final String[] WEEKDAYS =
@@ -41,7 +37,7 @@ public class Bullet {
      * @param description
      * @param weekday
      */
-    public void setBullet(int type, String description, int weekday) { //Bullet.TASK,"Tvätta 60 grader",7
+    public void setBullet(int type, String description, int weekday) {
         this.type = type;
         this.description = description;
         this.weekday = weekday;
@@ -52,7 +48,7 @@ public class Bullet {
      *
      * @param bullet type description weekday
      */
-    public void setBullet(String bullet) { //13 Tvätta 60 grader 7
+    public void setBullet(String bullet) {
         this.type = Integer.parseInt(bullet.substring(0, bullet.indexOf(' ')));
         this.description = bullet.substring((bullet.indexOf(' ') + 1), bullet.lastIndexOf(' '));
         this.weekday = Integer.parseInt(bullet.substring(bullet.lastIndexOf(' ') + 1));
@@ -60,9 +56,7 @@ public class Bullet {
 
     public Bullet migrate(int newWeekday) {
         this.type = MIGRATED;
-
-        Bullet b = new Bullet(TASK, this.description, newWeekday);
-        return b;
+        return new Bullet(TASK, this.description, newWeekday);
     }
 
     @Override
