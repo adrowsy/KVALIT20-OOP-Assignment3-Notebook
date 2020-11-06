@@ -12,6 +12,6 @@ public class Test {
      */
     public static void print(Bullet bullet, int i) {
         System.out.print("i=" + i + ", " + bullet + ":\t");
-        Bullet.print(bullet);
+        bullet.toString();
     }
 }

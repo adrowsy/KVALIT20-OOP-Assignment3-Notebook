@@ -7,32 +7,26 @@ import java.util.Scanner;
  */
 public class Journal {
 
-    /**
-     * journal är en instansvariabel som lagrar ett godtyckligt antal bullets
-     */
-    Bullet[] log; //Varje instans av journal har en logg som är en bulletarray
-    String name; //Varje instans av journal har också en titel
+    //Egenskaper hos Journal
+    private Bullet[] log;
+    private String name;
 
-    /**
-     * Klassmetod som skapar en "tom" journal
-     * (journalen innehåller en array av bullets där alla komponenter är null
-     *
-     * @return en journal (en instans av klassen Journal)
-     */
-    public static Journal getInstance(String name) {
-        Journal journal = new Journal();
-        journal.name = name;
-        System.out.println(Message.ADDED + "New journal " + journal);
-        return journal;
+    //Tom konstruktor
+    Journal() {
+    }
+
+    Journal(String name) {
+        setTitle(name);
+        System.out.println(Message.ADDED + "New journal " + name);
     }
 
     /**
-     * Instansmetod som döper journalen
+     * Change journal name
      *
-     * @param name döp loggen
+     * @param newName
      */
-    public void setTitle(String name) {
-        this.name = name;
+    public void setTitle(String newName) {
+        this.name = newName;
     }
 
     /**
@@ -43,42 +37,11 @@ public class Journal {
     public static void print(Journal j) {
         try {
             for (Bullet b : j.log)
-                Bullet.print(b);
+                b.toString();
         } catch (Exception e) {
             System.out.println(Message.EMPTY_LOG);
         }
     }
-
-    public static void print(Journal j, String sorted) {
-        System.out.println(Message.PRINT + j + " " + sorted);
-
-        if (sorted == JournalDemo.DAYS) {
-            for (int weekday = 1; weekday < Bullet.WEEKDAYS.length; weekday++) {
-                try {
-                    for (Bullet b : j.log) {
-                        if (b.weekday == weekday)
-                            Bullet.print(b);
-                    }
-                } catch (Exception e) {
-                    //System.out.println("No posts for " + Bullet.WEEKDAYS[weekday]);
-                }
-            }
-            System.out.println(Message.EOP);
-        }
-        if (sorted == JournalDemo.TYPE) {
-            for (int type = 1; type <= Bullet.TYPES.length; type++) {
-                try {
-                    for (Bullet b : j.log) {
-                        if (b.type == type)
-                            Bullet.print(b);
-                    }
-                } catch (Exception e) {
-                }
-            }
-            System.out.println(Message.EOP);
-        }
-    }
-
 
     public static final int NEW = 1,
             MIG = 3, OPEN = 2;
@@ -127,9 +90,3 @@ public class Journal {
         options();
 
     }
-
-    @Override
-    public String toString() {
-        return name + "";
-    }
-}
