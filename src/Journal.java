@@ -9,8 +9,10 @@
 public class Journal {
 
     //Egenskaper hos Journal
-    private Bullet[] log;
+    private Bullet[] bullets;
     private String name;
+
+    public static int SIZE = 2;
 
     //Tom konstruktor
     Journal() {
@@ -18,18 +20,47 @@ public class Journal {
 
     //Konstruktor
     Journal(String name) {
-        setTitle(name);
-        System.out.println(Message.ADDED + "New journal " + name);
+        this.bullets = new Bullet[SIZE];
+        setName(name);
+        System.out.println(Message.ADDED + "New journal named " + this.name);
+        System.out.println(Message.EMPTY_LOG);
+        System.out.println("Add bullets [Description WEEKDAYNR]. " +
+                "Save with Ctrl+D");
+        //--> Lägg till bullets
+    }
+
+    /**
+     * Create bullet from string
+     */
+    public void setBullet(String bullet) {
+        boolean emptySpot = false;
+
+        for (int i = 0; i < this.bullets.length; i++) {
+            if (this.bullets[i] == null) {
+                emptySpot = true;
+                this.bullets[i] = new Bullet(bullet);
+                break;
+            } else ;
+        }
+        if (!emptySpot) System.out.println("Reached max amount of bullets " + SIZE);
+    }
+
+    public static void getName(Journal j) {
+        System.out.println(j.name);
     }
 
     /**
      * Change journal name
      *
-     * @param newName
+     * @param name
      */
-    public void setTitle(String newName) {
-        this.name = newName;
+    public void setName(String name) {
+        if (this.name != null)
+            this.name = name;
+        else
+            System.out.println("Name must not be empty");
     }
+
 
     /**
      * En klassmetod som skriver ut alla bullets i en log
@@ -38,11 +69,10 @@ public class Journal {
      */
     public static void print(Journal j) {
         try {
-            for (Bullet b : j.log)
+            for (Bullet b : j.bullets)
                 b.toString();
         } catch (Exception e) {
             System.out.println(Message.EMPTY_LOG);
         }
     }
-
 }

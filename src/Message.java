@@ -35,12 +35,5 @@ public class Message {
             "# Error: ".toUpperCase();
     public static final String EMPTY_LOG =
             "! Log is empty";
-
-    public static void welcome() {
-        String welcome = "*** Welcome to " + NAME + " - " + TAGLINE + " ***";
-
-        System.out.println(welcome);
     }
-
-}
 

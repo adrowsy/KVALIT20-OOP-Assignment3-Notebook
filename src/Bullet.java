@@ -14,12 +14,12 @@ public class Bullet {
     private int weekday; //monday, tuesday...
 
     //Konstruktor
-    Bullet(int type, String description, int weekday) {
-        setBullet(type, description, weekday);
+    Bullet(String description, int weekday) {
+        setSingleBullet(description, weekday);
     }
 
     Bullet(String bullet) {
-        setBullet(bullet);
+        Single(bullet);
     }
 
     //Konstanter för type och utskrift
@@ -36,12 +36,11 @@ public class Bullet {
     /**
      * Create bullet from comma separated entry
      *
-     * @param type
      * @param description
      * @param weekday
      */
-    public void setBullet(int type, String description, int weekday) {
-        this.type = type;
+    public void setSingleBullet(String description, int weekday) {
+        this.type = TASK;
         this.description = description;
         this.weekday = weekday;
     }
@@ -51,15 +50,15 @@ public class Bullet {
      *
      * @param bullet type description weekday
      */
-    public void setBullet(String bullet) {
-        this.type = Integer.parseInt(bullet.substring(0, bullet.indexOf(' ')));
-        this.description = bullet.substring((bullet.indexOf(' ') + 1), bullet.lastIndexOf(' '));
+    public void Single(String bullet) {
+        this.type = TASK; //Integer.parseInt(bullet.substring(0, bullet.indexOf(' ')));
+        this.description = bullet.substring(0, bullet.lastIndexOf(' ')); //this.description = bullet.substring((bullet.indexOf(' ') + 1), bullet.lastIndexOf(' '));
         this.weekday = Integer.parseInt(bullet.substring(bullet.lastIndexOf(' ') + 1));
     }
 
     public Bullet migrate(int newWeekday) {
         this.type = MIGRATED;
-        return new Bullet(TASK, this.description, newWeekday);
+        return new Bullet(this.description, newWeekday);
     }
 
     @Override
