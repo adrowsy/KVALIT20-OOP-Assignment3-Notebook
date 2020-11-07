@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * Project: Assignment 3
  * Created by: Annika Rengfelt
@@ -77,7 +81,10 @@ public class Bullet {
     public void setBullet(String description, int weekday) {
         this.type = TASK;
         this.description = description;
-        this.weekday = weekday;
+        if (weekday >= 1 && weekday <= 7)
+            this.weekday = weekday;
+        else
+            throw new IllegalArgumentException("Weekday must be numbered 1-7");
     }
 
     /**
@@ -87,17 +94,45 @@ public class Bullet {
         bullet.type = DONE;
     }
 
-    public static void main(String[] args) {
+    public static final int NEW = 1;
+    public static final int OPEN = 2;
+    public static final int ADD = 3;
+    public static final int IMPORT = 4;
+    public static final int CONTINUE = 10;
+
+    public static void main(String[] args) throws FileNotFoundException {
 
         String userDescription;
         int userWeekday;
-
+        int userChoice;
         Journal journal = Journal.getJournal();
-        //Journal.scanTo(journal);
-        journal.journal[0] = getInstance("Kattmat", 2);
-        journal.journal[1] = getInstance("Köp klästräd", 2);
 
-        System.out.println(journal);
+        System.out.println("Welcome. Available choices:");
+
+        do {
+            System.out.println("[" + NEW + "] " + "Start new journal".toUpperCase());
+            System.out.println("[" + OPEN + "] " + "Open journal".toUpperCase());
+
+            userChoice = NEW;
+
+            if (userChoice == NEW) {
+                journal = Journal.getJournal();
+                //userChoice = CONTINUE;
+            } else if (userChoice == OPEN) {
+                try {
+                    System.out.println(journal);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (userChoice == ADD) {
+                Journal.scanTo(journal);
+            } else if (userChoice == IMPORT) {
+                System.out.println("Import from file [Y/N]?");
+                Journal.importFromFile(journal);
+            }
+
+            userChoice = CONTINUE;
+        }
+        while (userChoice == CONTINUE);
     }
-
 }

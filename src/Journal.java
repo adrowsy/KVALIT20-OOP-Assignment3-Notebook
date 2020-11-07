@@ -1,4 +1,5 @@
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -37,20 +38,25 @@ public class Journal {
         return journal;
     }
 
-    public int nextAvailableSpot() {
-        int nextAvailableSpot = 0;
+    /**
+     * Klassmetod för att hitta första lediga index i journal
+     *
+     * @return nextAvailableIndex -1 indicates no available spot
+     */
+    public int nextAvailableIndex() {
+        int nextAvailableIndex = 0;
         boolean emptySpot = false;
         for (int i = 0; i < this.journal.length; i++) {
             if (this.journal[i] == null) {
-                nextAvailableSpot = i;
+                nextAvailableIndex = i;
                 emptySpot = true;
                 break;
             }
         }
         if (!emptySpot) {
-            nextAvailableSpot = -1;
+            nextAvailableIndex = -1;
         }
-        return nextAvailableSpot;
+        return nextAvailableIndex;
     }
 
     public static void scanTo(Journal journal) {
@@ -64,12 +70,32 @@ public class Journal {
                 userDescription = bullet.substring(0, bullet.lastIndexOf(' '));
                 userWeekday = Integer.parseInt(bullet.substring(bullet.lastIndexOf(' ') + 1));
 
-                journal.journal[journal.nextAvailableSpot()] =
+                journal.journal[journal.nextAvailableIndex()] =
                         Bullet.getInstance(userDescription, userWeekday);
 
             } catch (Exception e) {
-                System.out.println("Error: Wrong format " + e);
+                System.out.println("Error: " + e);
             }
+        }
+    }
+
+    public static void importFromFile(Journal journal) throws FileNotFoundException {
+        String userDescription;
+        int userWeekday;
+        String fileName = "list.txt";
+        Scanner file = new Scanner(new File(fileName));
+        try {
+            while (file.hasNextLine()) {
+                userDescription = file.next();
+                while (!file.hasNextInt()) {
+                    userDescription += " " + file.next();
+                }
+                userWeekday = file.nextInt();
+                journal.journal[journal.nextAvailableIndex()] =
+                        Bullet.getInstance(userDescription, userWeekday);
+            }
+        } catch (Exception e) {
+            System.out.print("Warning: " + e + '\n');
         }
     }
 
