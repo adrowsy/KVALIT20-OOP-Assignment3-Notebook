@@ -109,14 +109,14 @@ public class Bullet {
         Journal journal = Journal.getJournal();
 
         System.out.println("Welcome. Available choices:");
-        initialOptions();
+        options();
 
         scanner = new Scanner(System.in);
         userChoice = scanner.next();
 
         if (userChoice.equals(NEW)) {
             journal = Journal.getJournal();
-            addingOptions();
+            options();
 
             scanner = new Scanner(System.in);
             userChoice = scanner.next();
@@ -125,7 +125,7 @@ public class Bullet {
         if (userChoice.equals(OPEN)) {
             userChoice = "";
             System.out.println(journal);
-            addingOptions();
+            options();
 
             scanner = new Scanner(System.in);
             userChoice = scanner.next();
@@ -157,13 +157,8 @@ public class Bullet {
     }
 
 
-    public static void initialOptions() {
+    public static void options() {
         System.out.println("[" + NEW + "] " + "Start new journal".toUpperCase());
-        System.out.println("[" + OPEN + "] " + "Open journal".toUpperCase());
-        System.out.println("Your choice: ".toUpperCase());
-    }
-
-    public static void addingOptions() {
         System.out.println("[" + OPEN + "] " + "Open journal".toUpperCase());
         System.out.println("[" + ADD + "] " + "Add entries".toUpperCase());
         System.out.println("[" + IMPORT + "] " + "Import from file".toUpperCase());
