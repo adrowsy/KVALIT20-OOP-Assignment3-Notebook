@@ -98,41 +98,73 @@ public class Bullet {
     public static final int OPEN = 2;
     public static final int ADD = 3;
     public static final int IMPORT = 4;
-    public static final int CONTINUE = 10;
+    public static final int CONTINUE = 0;
 
     public static void main(String[] args) throws FileNotFoundException {
 
         String userDescription;
         int userWeekday;
-        int userChoice;
+        int userChoice = 0;
+        Scanner scanner = new Scanner(System.in);
         Journal journal = Journal.getJournal();
 
+
         System.out.println("Welcome. Available choices:");
+        initialOptions();
 
-        do {
-            System.out.println("[" + NEW + "] " + "Start new journal".toUpperCase());
-            System.out.println("[" + OPEN + "] " + "Open journal".toUpperCase());
+        System.out.flush();
+        scanner = new Scanner(System.in);
+        userChoice = scanner.nextInt();
 
-            userChoice = NEW;
+        if (userChoice == NEW) {
+            journal = Journal.getJournal();
+            addingOptions();
 
-            if (userChoice == NEW) {
-                journal = Journal.getJournal();
-                //userChoice = CONTINUE;
-            } else if (userChoice == OPEN) {
-                try {
-                    System.out.println(journal);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (userChoice == ADD) {
-                Journal.scanTo(journal);
-            } else if (userChoice == IMPORT) {
-                System.out.println("Import from file [Y/N]?");
-                Journal.importFromFile(journal);
-            }
+            System.out.flush();
+            scanner = new Scanner(System.in);
+            userChoice = scanner.nextInt();
 
-            userChoice = CONTINUE;
         }
-        while (userChoice == CONTINUE);
+        if (userChoice == OPEN) {
+            System.out.println(journal);
+            addingOptions();
+
+            System.out.flush();
+            scanner = new Scanner(System.in);
+            userChoice = scanner.nextInt();
+        }
+        if (userChoice == ADD) {
+            Journal.scanTo(journal);
+            System.out.println(journal);
+
+
+            addingOptions();
+            System.out.flush();
+            scanner = new Scanner(System.in);
+            userChoice = scanner.nextInt();
+
+        }
+        if (userChoice == IMPORT) {
+            Journal.importFromFile(journal);
+
+            System.out.flush();
+            scanner = new Scanner(System.in);
+            userChoice = scanner.nextInt();
+        }
+    }
+
+
+    public static void initialOptions() {
+        System.out.println("[" + NEW + "] " + "Start new journal".toUpperCase());
+        System.out.println("[" + OPEN + "] " + "Open journal".toUpperCase());
+        System.out.println("Your choice: ".toUpperCase());
+    }
+
+    public static void addingOptions() {
+        System.out.println("[" + OPEN + "] " + "Open journal".toUpperCase());
+        System.out.println("[" + ADD + "] " + "Add entries".toUpperCase());
+        System.out.println("[" + IMPORT + "] " + "Import from file".toUpperCase());
+        System.out.println("[" + CONTINUE + "] " + "Go up a level".toUpperCase());
+        System.out.println("Your choice: ".toUpperCase());
     }
 }

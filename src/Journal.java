@@ -22,7 +22,6 @@ public class Journal {
         int size = STANDARD_SIZE;
         Journal journal = new Journal();
         journal.journal = new Bullet[size];
-        System.out.println("Created new journal with room for " + size + " bullets");
         return journal;
     }
 
@@ -77,8 +76,15 @@ public class Journal {
                 System.out.println("Error: " + e);
             }
         }
+        sc.close();
     }
 
+    /**
+     * Klassmetod som skapar bullets från textfil
+     *
+     * @param journal
+     * @throws FileNotFoundException
+     */
     public static void importFromFile(Journal journal) throws FileNotFoundException {
         String userDescription;
         int userWeekday;
@@ -101,11 +107,16 @@ public class Journal {
 
     @Override
     public String toString() {
+        int empty = 0;
         String s = "\nJournal entries:";
         for (int i = 0; i < this.journal.length; i++) {
             if (journal[i] != null)
                 s += "\n" + journal[i];
+            else
+                empty++;
         }
+        if (empty >= this.journal.length)
+            s += " No entries";
         return s + '\n';
     }
 }
