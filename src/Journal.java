@@ -57,7 +57,7 @@ public class Journal {
         String userDescription;
         int userWeekday;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Add new bullet followed by n (\"buy candy 1\"). Save with Ctrl+D");
+        System.out.println("Add new bullet followed by n (\"buy candy 1\"). Save with E-O-F");
         while (sc.hasNext()) {
             try {
                 String bullet = sc.nextLine();
@@ -71,5 +71,15 @@ public class Journal {
                 System.out.println("Error: Wrong format " + e);
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        String s = "\nJournal entries:";
+        for (int i = 0; i < this.journal.length; i++) {
+            if (journal[i] != null)
+                s += "\n" + journal[i];
+        }
+        return s + '\n';
     }
 }

@@ -42,6 +42,19 @@ public class Bullet {
     }
 
     /**
+     * instansmetod som skriver ut bullet
+     */
+    public void print() {
+        System.out.println(Bullet.SYMBOLS[this.type] + " " + this.description + " " + Bullet.WEEKDAYS[this.weekday]);
+    }
+
+    @Override
+    public String toString() {
+        return SYMBOLS[type] + " " +
+                description + " " + WEEKDAYS[weekday];
+    }
+
+    /**
      * Klassmetod som instansierar och deklarerar en bullet
      *
      * @param description
@@ -80,18 +93,11 @@ public class Bullet {
         int userWeekday;
 
         Journal journal = Journal.getJournal();
+        //Journal.scanTo(journal);
+        journal.journal[0] = getInstance("Kattmat", 2);
+        journal.journal[1] = getInstance("Köp klästräd", 2);
 
-        Journal.scanTo(journal);
-        print(journal.journal);
-
-    }
-
-    public static void print(Bullet[] journal) {
-        for (int i = 0; i < journal.length; i++) {
-            if (journal[i] != null) {
-                print(journal[i]);
-            }
-        }
+        System.out.println(journal);
     }
 
 }
