@@ -94,62 +94,65 @@ public class Bullet {
         bullet.type = DONE;
     }
 
-    public static final int NEW = 1;
-    public static final int OPEN = 2;
-    public static final int ADD = 3;
-    public static final int IMPORT = 4;
-    public static final int CONTINUE = 0;
+    public static final String NEW = "1";
+    public static final String OPEN = "2";
+    public static final String ADD = "3";
+    public static final String IMPORT = "4";
+    public static final String CONTINUE = "0";
 
     public static void main(String[] args) throws FileNotFoundException {
 
         String userDescription;
         int userWeekday;
-        int userChoice = 0;
+        String userChoice = "";
         Scanner scanner = new Scanner(System.in);
         Journal journal = Journal.getJournal();
-
 
         System.out.println("Welcome. Available choices:");
         initialOptions();
 
-        System.out.flush();
         scanner = new Scanner(System.in);
-        userChoice = scanner.nextInt();
+        userChoice = scanner.next();
 
-        if (userChoice == NEW) {
+        if (userChoice.equals(NEW)) {
             journal = Journal.getJournal();
             addingOptions();
 
-            System.out.flush();
             scanner = new Scanner(System.in);
-            userChoice = scanner.nextInt();
+            userChoice = scanner.next();
 
         }
-        if (userChoice == OPEN) {
+        if (userChoice.equals(OPEN)) {
+            userChoice = "";
             System.out.println(journal);
             addingOptions();
 
-            System.out.flush();
             scanner = new Scanner(System.in);
-            userChoice = scanner.nextInt();
+            userChoice = scanner.next();
         }
-        if (userChoice == ADD) {
+        if (userChoice.equals(ADD)) {
+            userChoice = "";
             Journal.scanTo(journal);
             System.out.println(journal);
 
-
-            addingOptions();
-            System.out.flush();
-            scanner = new Scanner(System.in);
-            userChoice = scanner.nextInt();
+            //addingOptions();
+            //scanner = new Scanner(System.in);
+            //userChoice = scanner.next();
+            //Exception in thread "main" java.util.NoSuchElementException
+            //	at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+            //	at java.base/java.util.Scanner.next(Scanner.java:1594)
+            //	at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
+            //	at java.base/java.util.Scanner.nextInt(Scanner.java:2212)
+            //	at Bullet.main(Bullet.java:142)
 
         }
-        if (userChoice == IMPORT) {
+        if (userChoice.equals(IMPORT)) {
             Journal.importFromFile(journal);
+            System.out.println(journal);
 
             System.out.flush();
             scanner = new Scanner(System.in);
-            userChoice = scanner.nextInt();
+            userChoice = scanner.next();
         }
     }
 
