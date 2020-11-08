@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Journal {
 
     //Egenskaper hos journal
-    Bullet[] journal; //En array av typen Bullet
+    private Bullet[] journal; //En array av typen Bullet
 
     public static final int STANDARD_SIZE = 10;
 
@@ -38,7 +38,7 @@ public class Journal {
     }
 
     /**
-     * Klassmetod för att hitta första lediga index i journal
+     * Instansmetod för att hitta första lediga index i journal
      *
      * @return nextAvailableIndex -1 indicates no available spot
      */
@@ -57,6 +57,12 @@ public class Journal {
         }
         return nextAvailableIndex;
     }
+
+    /**
+     * Klassmetod som läser in värden från tangentbordet och skriver bullets
+     *
+     * @param journal var de ska sparas
+     */
 
     public static void scanTo(Journal journal) {
         String userDescription;
