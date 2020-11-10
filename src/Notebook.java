@@ -1,5 +1,5 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -23,17 +23,17 @@ public class Notebook {
         return notebook;
     }
 
-    /**
-     * Restoring all entries to null
-     *
-     * @param notebook
-     */
-    public static void erase(Notebook notebook) {
-        //for (int i = 0; i < notebook.notebook.length; i++) {
-        for (int i = 0; i < notebook.notebook.length; i++) {
-            notebook.notebook[i].clearNote();
+    //TODO: Fixa
+    public static void exportToFile(Notebook notebook, String fileName) {
+        try {
+            PrintWriter export = new PrintWriter(
+                    new BufferedWriter(new FileWriter(fileName, true)));
+            for (int i = 0; i < notebook.notebook.length; i++) {
+                export.println(notebook.notebook[i].toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println("\nAll entries cleared. Notebook is now empty\n");
     }
 
     /**
@@ -119,19 +119,26 @@ public class Notebook {
         }
     }
 
-
     @Override
     public String toString() {
+        /*String s;
+        s = ("Notebook{");
+        s += ("notebook=") + (Arrays.toString(notebook));
+        s += ('}');
+        return s;*/
+        String s = "Notebook: ";
         int empty = 0;
-        String s = "\nNotebook";
+
         for (int i = 0; i < this.notebook.length; i++) {
-            if (notebook[i].getDescription() != null)
-                s += "\n" + notebook[i];
+            if (notebook[i] != null)
+                s += "\n" + " " + this.notebook[i];
             else
                 empty++;
         }
-        if (empty >= this.notebook.length)
-            s += " is empty";
-        return s + '\n';
+        if (empty >= this.notebook.length) {
+            s = "\nNotebook is empty";
+        }
+        return s + "\n";
     }
 }
+
