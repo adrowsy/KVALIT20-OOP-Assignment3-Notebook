@@ -1,9 +1,2 @@
-Första raden 1
-Andra raden 2
-Tredje raden 3
-Fjärde raden 4
-Femte raden 5
-Sjätte raden 6
-Sjunde raden 7
-Rad åtta 1
-Rad nio 1
+rad ett
+rad två

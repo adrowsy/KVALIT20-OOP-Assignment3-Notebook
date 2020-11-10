@@ -1,4 +1,6 @@
-import java.io.*;
+import javax.xml.transform.Source;
+import java.io.InputStream;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 /**
@@ -9,70 +11,69 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static final String NEW = "1";
-    public static final String OPEN = "2";
-    public static final String ADD = "3";
-    public static final String IMPORT = "4";
-    public static final String CONTINUE = "0";
+    public static final String OPEN = "1";
+    public static final String IMPORT = "2";
+    public static final String DONE = "3";
+    public static final String CLEAR = "4";
+    public static final String EXIT = "x";
 
     public static void main(String[] args) throws Exception {
 
         String userDescription;
-        int userWeekday;
         String userChoice = "";
-        Scanner scanner = new Scanner(System.in);
-        Journal journal = Journal.getJournal();
+        Scanner scanner;
+        Notebook notebook = Notebook.getInstance(100);
 
-        System.out.println("Welcome. Available choices:");
-        options();
+        System.out.println("Welcome. These are your options".toUpperCase());
 
-        scanner = new Scanner(System.in);
-        userChoice = scanner.next();
+        do {
+            System.out.println("[" + OPEN + "] " + "Open notebook".toUpperCase());
+            System.out.println("[" + IMPORT + "] " + "Import tasks from file".toUpperCase());
+            System.out.println("[" + DONE + "] " + "Mark tasks as completed".toUpperCase());
+            System.out.println("[" + CLEAR + "] " + "Erase all entries".toUpperCase());
+            System.out.println("[" + EXIT + "] " + "Exit program".toUpperCase());
+            System.out.print("Your choice: ".toUpperCase());
 
-        switch (userChoice) {
-            case NEW -> {
-                journal = Journal.getJournal();
-                System.out.println("New journal created");
-                options();
-                scanner = new Scanner(System.in);
-                userChoice = scanner.next();
-            }
-            case OPEN -> {
-                userChoice = "";
-                System.out.println(journal);
-                options();
-                scanner = new Scanner(System.in);
-                userChoice = scanner.next();
-            }
-            case ADD -> {
-                userChoice = "";
-                Journal.scanTo(journal);
-                System.out.println(journal);
-                options();
-                userChoice = "";
-                scanner = new Scanner(System.in);
-                try {
-                    userChoice = scanner.next();
-                } catch (Exception e) {
-                    System.out.println("Error: " + e);
-                    //Exception in thread "main" java.util.NoSuchElementException
+            scanner = new Scanner(System.in);
+            userChoice = scanner.next().toLowerCase();
+
+            switch (userChoice) {
+                case EXIT -> {
+                    System.out.println("Bye bye!");
+                    System.exit(0);
+                }
+                case OPEN -> {
+                    System.out.println(notebook);
+                }
+                case CLEAR -> {
+                    Notebook.erase(notebook);
+                }
+                case IMPORT -> {
+                    Notebook.importFromFile(notebook, "galilei.txt");
+                    System.out.println(notebook);
+                }
+                case DONE -> {
+                    //Presentera journalen med index
+                    boolean emptyNotebook = notebook.printWithIndex();
+
+                    if (!emptyNotebook) { //Klarmarkera bara om anteckningsboken inte är tom
+                        //Markera index som ska klarmarkeras
+                        System.out.print("What did you complete?\n".toUpperCase()
+                                + Note.SYMBOLS[Note.INFO] + "Enter [row] to mark as done:");
+                        try {
+                            Scanner mark = new Scanner(System.in);
+                            while (mark.hasNextInt()) {
+                                notebook.setDone(mark.nextInt() - 1);
+                                System.out.print("Did you do something else?\n".toUpperCase()
+                                        + Note.SYMBOLS[Note.INFO] + "Enter [row] or any non-numeric key to exit: ");
+                            }
+                        } catch (Exception e) {
+                            System.out.printf("Error: " + e);
+                        }
+                    }
                 }
             }
-            case IMPORT -> {
-                Journal.importFromFile(journal);
-                System.out.println(journal);
-                System.out.flush();
-                scanner = new Scanner(System.in);
-                userChoice = scanner.next();
-            }
-        }
+        } while (true);
     }
 
-    public static void options() {
-        System.out.println("[" + NEW + "] " + "Start new journal".toUpperCase());
-        System.out.println("[" + OPEN + "] " + "Open journal".toUpperCase());
-        System.out.println("[" + ADD + "] " + "Add entries".toUpperCase());
-        System.out.println("[" + IMPORT + "] " + "Import from file".toUpperCase());
-        System.out.print("Your choice: ".toUpperCase());
-    }
 }
