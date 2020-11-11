@@ -6,14 +6,13 @@
 
 public class Note {
 
-    //Egenskaper hos Note (instansvariabler)
-    private int type; //Typ - använder konstanter
-    private String description; //Beskrivning (fritext)
+    //Instans variables
+    private int type; //Task or Done
+    private String description; //Various values
 
     //Konstanter
     public static final int TASK = 1;
     public static final int DONE = 2;
-    public static final int INFO = 3;
 
     //Array för utskrift
     public static final String[] SYMBOLS = {null,
@@ -24,9 +23,9 @@ public class Note {
 
 
     /**
-     * Instantiating and initializes a note
+     * Instantiating and initializes one note
      *
-     * @param description
+     * @param description what to be done
      * @return note
      */
     public static Note getInstance(String description) {
@@ -47,10 +46,10 @@ public class Note {
     /**
      * Initializes a note
      *
-     * @param description
+     * @param description what to be done
      */
     public void setNote(String description) {
-        this.type = TASK; //All new instances are tasks to be performed
+        this.type = TASK; //All new instances are tasks
         this.description = description;
     }
 
@@ -73,6 +72,5 @@ public class Note {
     public String toString() {
         return SYMBOLS[type] + " " + description;
     }
-
 
 }

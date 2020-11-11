@@ -1,21 +1,21 @@
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
- * Project:
+ * Project: Assignment 3
  * Created by: Annika Rengfelt
- * Created:
+ * Due: 2020-11-11
  */
+
 public class Notebook {
 
-    //Egenskaper hos journal
-    private Note[] notebook; //En array av typen Note
+    //Instans variables
+    private Note[] notebook;
 
     /**
      * Creating Notebooks with room for size number of notes
      *
-     * @param size
+     * @param size maximum amount of entry
      */
     public static Notebook getInstance(int size) {
         Notebook notebook = new Notebook();
@@ -23,18 +23,6 @@ public class Notebook {
         return notebook;
     }
 
-    //TODO: Fixa
-    public static void exportToFile(Notebook notebook, String fileName) {
-        try {
-            PrintWriter export = new PrintWriter(
-                    new BufferedWriter(new FileWriter(fileName, true)));
-            for (int i = 0; i < notebook.notebook.length; i++) {
-                export.println(notebook.notebook[i].toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Writes new entry to next available index in array
@@ -61,8 +49,8 @@ public class Notebook {
     /**
      * Creates a Notebook instance with Notes from File
      *
-     * @param notebook
-     * @throws FileNotFoundException
+     * @param notebook to hold notes
+     * @param fileName what file to import from
      */
     public static void importFromFile(Notebook notebook, String fileName) throws FileNotFoundException {
         String userDescription = "";
@@ -89,8 +77,8 @@ public class Notebook {
      * @return boolean true if notebook is completely empty
      */
     public boolean printWithIndex() {
-        //Skriv ut varje index i journal
-        //Börja med radnummer (index+1)
+        //Write every index in journal
+        //Start with row number (index+1)
         int empty = 0;
         boolean emptyNotebook = false;
 
@@ -108,6 +96,12 @@ public class Notebook {
         return emptyNotebook;
     }
 
+    /**
+     * Instance method that sets a note as completed
+     * by using note instance method
+     *
+     * @param index
+     */
     public void setDone(int index) {
         try {
             if (index >= 0 && index <= notebook.length) {
@@ -119,13 +113,13 @@ public class Notebook {
         }
     }
 
+    /**
+     * Prints notebook
+     *
+     * @return String representation of notebook entries
+     */
     @Override
     public String toString() {
-        /*String s;
-        s = ("Notebook{");
-        s += ("notebook=") + (Arrays.toString(notebook));
-        s += ('}');
-        return s;*/
         String s = "Notebook: ";
         int empty = 0;
 
