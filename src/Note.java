@@ -13,6 +13,8 @@ public class Note {
     //Konstanter
     public static final int TASK = 1;
     public static final int DONE = 2;
+    public static final int INFO = 3;
+
 
     //Array för utskrift
     public static final String[] SYMBOLS = {null,
